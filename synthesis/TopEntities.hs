@@ -8,7 +8,7 @@ import Clash.Annotations.TopEntity (PortName(..), TopEntity(..))
 import Clash.Prelude
 
 import CategoricalSNN
-  ( LIFParams
+  ( LIFParams(..)
   , NeuronState
   , SNNMorphism(..)
   , Spike
@@ -16,9 +16,11 @@ import CategoricalSNN
   , defaultLIFParams
   , flatLayer
   , flatNetwork2Layer
+  , flatNetwork3Layer
   , lifStep
   , snnLayer
   , snnNetwork2Layer
+  , snnNetwork3Layer
   )
 
 main :: IO ()
@@ -26,6 +28,9 @@ main = pure ()
 
 benchmarkLIFParams :: LIFParams
 benchmarkLIFParams = defaultLIFParams
+
+irregularLIFParams :: LIFParams
+irregularLIFParams = LIFParams 0.8 0.92 0.0
 
 weights4to3 :: Vec 3 (Vec 4 Weight)
 weights4to3 =
@@ -53,6 +58,33 @@ weights16to8 = repeat (repeat 0.125)
 
 weights32to16 :: Vec 16 (Vec 32 Weight)
 weights32to16 = repeat (repeat 0.0625)
+
+weights12to7 :: Vec 7 (Vec 12 Weight)
+weights12to7 =
+     ( 0.25 :> (-0.10) :> 0.15 :> 0.00 :> 0.20 :> (-0.05) :> 0.10 :> 0.30 :> (-0.12) :> 0.18 :> 0.00 :> 0.22 :> Nil)
+  :> ((-0.18) :> 0.24 :> 0.00 :> 0.12 :> 0.08 :> 0.16 :> (-0.14) :> 0.28 :> 0.11 :> 0.00 :> 0.20 :> (-0.06) :> Nil)
+  :> ( 0.05 :> 0.19 :> (-0.22) :> 0.31 :> 0.00 :> 0.14 :> 0.26 :> (-0.09) :> 0.17 :> 0.07 :> (-0.04) :> 0.12 :> Nil)
+  :> ( 0.29 :> 0.00 :> 0.13 :> (-0.17) :> 0.21 :> 0.09 :> 0.00 :> 0.24 :> (-0.08) :> 0.16 :> 0.06 :> (-0.11) :> Nil)
+  :> ((-0.07) :> 0.27 :> 0.18 :> 0.00 :> (-0.15) :> 0.23 :> 0.12 :> 0.05 :> 0.19 :> (-0.10) :> 0.14 :> 0.00 :> Nil)
+  :> ( 0.11 :> 0.04 :> 0.25 :> (-0.13) :> 0.28 :> 0.00 :> 0.09 :> (-0.16) :> 0.22 :> 0.15 :> 0.03 :> 0.18 :> Nil)
+  :> ( 0.00 :> 0.21 :> (-0.05) :> 0.18 :> 0.24 :> 0.10 :> (-0.09) :> 0.13 :> 0.00 :> 0.20 :> 0.16 :> (-0.12) :> Nil)
+  :> Nil
+
+weights7to5 :: Vec 5 (Vec 7 Weight)
+weights7to5 =
+     ( 0.30 :> (-0.18) :> 0.22 :> 0.00 :> 0.14 :> 0.19 :> (-0.11) :> Nil)
+  :> ((-0.09) :> 0.27 :> 0.16 :> 0.21 :> 0.00 :> (-0.13) :> 0.24 :> Nil)
+  :> ( 0.18 :> 0.00 :> (-0.15) :> 0.26 :> 0.12 :> 0.20 :> 0.07 :> Nil)
+  :> ( 0.05 :> 0.23 :> 0.11 :> (-0.17) :> 0.29 :> 0.00 :> 0.15 :> Nil)
+  :> ((-0.12) :> 0.14 :> 0.25 :> 0.09 :> 0.18 :> (-0.08) :> 0.22 :> Nil)
+  :> Nil
+
+weights5to3 :: Vec 3 (Vec 5 Weight)
+weights5to3 =
+     ( 0.34 :> (-0.16) :> 0.21 :> 0.00 :> 0.18 :> Nil)
+  :> ( 0.09 :> 0.28 :> (-0.14) :> 0.24 :> 0.11 :> Nil)
+  :> ((-0.10) :> 0.17 :> 0.26 :> 0.13 :> 0.20 :> Nil)
+  :> Nil
 
 {-# ANN snn4to3
   (Synthesize
@@ -96,9 +128,22 @@ snn4to3Flat
   -> Signal System (Vec 4 Spike)
   -> Signal System (Vec 3 Spike)
 snn4to3Flat clk rst en =
-  case flatLayer weights4to3 benchmarkLIFParams of
-    SNNMorphism transition initState ->
-      exposeClockResetEnable (mealy transition initState) clk rst en
+  exposeClockResetEnable (mealy transition initState) clk rst en
+ where
+  transition
+    :: Vec 3 NeuronState
+    -> Vec 4 Spike
+    -> (Vec 3 NeuronState, Vec 3 Spike)
+  transition states spikes =
+    let step st wRow =
+          let current = foldl (+) 0 (zipWith (\w s -> if s then w else 0) wRow spikes)
+              (vOut, fired) = lifStep benchmarkLIFParams st current
+          in  (vOut, fired)
+        results = zipWith step states weights4to3
+    in  (map fst results, map snd results)
+
+  initState :: Vec 3 NeuronState
+  initState = repeat 0
 
 {-# ANN snn4to3to2
   (Synthesize
@@ -205,9 +250,22 @@ snn8to4Flat
   -> Signal System (Vec 8 Spike)
   -> Signal System (Vec 4 Spike)
 snn8to4Flat clk rst en =
-  case flatLayer weights8to4 benchmarkLIFParams of
-    SNNMorphism transition initState ->
-      exposeClockResetEnable (mealy transition initState) clk rst en
+  exposeClockResetEnable (mealy transition initState) clk rst en
+ where
+  transition
+    :: Vec 4 NeuronState
+    -> Vec 8 Spike
+    -> (Vec 4 NeuronState, Vec 4 Spike)
+  transition states spikes =
+    let step st wRow =
+          let current = foldl (+) 0 (zipWith (\w s -> if s then w else 0) wRow spikes)
+              (vOut, fired) = lifStep benchmarkLIFParams st current
+          in  (vOut, fired)
+        results = zipWith step states weights8to4
+    in  (map fst results, map snd results)
+
+  initState :: Vec 4 NeuronState
+  initState = repeat 0
 
 {-# ANN snn16to8to4
   (Synthesize
@@ -334,3 +392,71 @@ snn32to16to8Flat clk rst en =
 
   initState :: (Vec 16 NeuronState, Vec 8 NeuronState)
   initState = (repeat 0, repeat 0)
+
+{-# ANN snn12to7to5to3
+  (Synthesize
+    { t_name = "snn_12to7to5to3"
+    , t_inputs =
+        [ PortName "clk"
+        , PortName "rst"
+        , PortName "en"
+        , PortName "spike_in"
+        ]
+    , t_output = PortName "spike_out"
+    }) #-}
+{-# NOINLINE snn12to7to5to3 #-}
+snn12to7to5to3
+  :: Clock System
+  -> Reset System
+  -> Enable System
+  -> Signal System (Vec 12 Spike)
+  -> Signal System (Vec 3 Spike)
+snn12to7to5to3 clk rst en =
+  case snnNetwork3Layer weights12to7 weights7to5 weights5to3 irregularLIFParams of
+    SNNMorphism transition initState ->
+      exposeClockResetEnable (mealy transition initState) clk rst en
+
+{-# ANN snn12to7to5to3Flat
+  (Synthesize
+    { t_name = "snn_12to7to5to3_flat"
+    , t_inputs =
+        [ PortName "clk"
+        , PortName "rst"
+        , PortName "en"
+        , PortName "spike_in"
+        ]
+    , t_output = PortName "spike_out"
+    }) #-}
+{-# NOINLINE snn12to7to5to3Flat #-}
+snn12to7to5to3Flat
+  :: Clock System
+  -> Reset System
+  -> Enable System
+  -> Signal System (Vec 12 Spike)
+  -> Signal System (Vec 3 Spike)
+snn12to7to5to3Flat clk rst en =
+  exposeClockResetEnable (mealy transition initState) clk rst en
+ where
+  transition
+    :: (Vec 7 NeuronState, Vec 5 NeuronState, Vec 3 NeuronState)
+    -> Vec 12 Spike
+    -> ((Vec 7 NeuronState, Vec 5 NeuronState, Vec 3 NeuronState), Vec 3 Spike)
+  transition (s1, s2, s3) spikes =
+    let currents1 = map
+          (\wRow -> foldl (+) 0 (zipWith (\w s -> if s then w else 0) wRow spikes))
+          weights12to7
+        results1 = zipWith (lifStep irregularLIFParams) s1 currents1
+        midSpikes1 = map snd results1
+        currents2 = map
+          (\wRow -> foldl (+) 0 (zipWith (\w s -> if s then w else 0) wRow midSpikes1))
+          weights7to5
+        results2 = zipWith (lifStep irregularLIFParams) s2 currents2
+        midSpikes2 = map snd results2
+        currents3 = map
+          (\wRow -> foldl (+) 0 (zipWith (\w s -> if s then w else 0) wRow midSpikes2))
+          weights5to3
+        results3 = zipWith (lifStep irregularLIFParams) s3 currents3
+    in  ((map fst results1, map fst results2, map fst results3), map snd results3)
+
+  initState :: (Vec 7 NeuronState, Vec 5 NeuronState, Vec 3 NeuronState)
+  initState = (repeat 0, repeat 0, repeat 0)

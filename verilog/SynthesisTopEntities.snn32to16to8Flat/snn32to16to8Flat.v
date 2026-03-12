@@ -51,27 +51,27 @@ module snn32to16to8Flat
     , output wire  c$ds_app_arg_6
     , output wire  c$ds_app_arg_7
     );
-  // /Users/jake/EMPIRE/projects/ongoing/2026_039/CategoricalSNN.hs/synthesis/TopEntities.hs:316:1-16
+  // /Users/jake/EMPIRE/projects/ongoing/2026_039/CategoricalSNN.hs/synthesis/TopEntities.hs:374:1-16
   wire [511:0] c$results1_app_arg;
   wire [255:0] result;
-  // /Users/jake/EMPIRE/projects/ongoing/2026_039/CategoricalSNN.hs/synthesis/TopEntities.hs:316:1-16
+  // /Users/jake/EMPIRE/projects/ongoing/2026_039/CategoricalSNN.hs/synthesis/TopEntities.hs:374:1-16
   wire [511:0] c$ds_app_arg_16;
-  // /Users/jake/EMPIRE/projects/ongoing/2026_039/CategoricalSNN.hs/synthesis/TopEntities.hs:316:1-16
+  // /Users/jake/EMPIRE/projects/ongoing/2026_039/CategoricalSNN.hs/synthesis/TopEntities.hs:374:1-16
   wire [255:0] c$ds_app_arg_17;
-  // /Users/jake/EMPIRE/projects/ongoing/2026_039/CategoricalSNN.hs/synthesis/TopEntities.hs:316:1-16
+  // /Users/jake/EMPIRE/projects/ongoing/2026_039/CategoricalSNN.hs/synthesis/TopEntities.hs:374:1-16
   wire [511:0] s1;
-  // /Users/jake/EMPIRE/projects/ongoing/2026_039/CategoricalSNN.hs/synthesis/TopEntities.hs:316:1-16
+  // /Users/jake/EMPIRE/projects/ongoing/2026_039/CategoricalSNN.hs/synthesis/TopEntities.hs:374:1-16
   wire [255:0] s2;
-  // /Users/jake/EMPIRE/projects/ongoing/2026_039/CategoricalSNN.hs/synthesis/TopEntities.hs:316:1-16
+  // /Users/jake/EMPIRE/projects/ongoing/2026_039/CategoricalSNN.hs/synthesis/TopEntities.hs:374:1-16
   reg [767:0] ds = {{32'sd0,   32'sd0,   32'sd0,   32'sd0,   32'sd0,   32'sd0,   32'sd0,   32'sd0,
   32'sd0,   32'sd0,   32'sd0,   32'sd0,   32'sd0,   32'sd0,   32'sd0,
   32'sd0},   {32'sd0,   32'sd0,   32'sd0,   32'sd0,   32'sd0,   32'sd0,
               32'sd0,   32'sd0}};
-  // /Users/jake/EMPIRE/projects/ongoing/2026_039/CategoricalSNN.hs/synthesis/TopEntities.hs:316:1-16
+  // /Users/jake/EMPIRE/projects/ongoing/2026_039/CategoricalSNN.hs/synthesis/TopEntities.hs:374:1-16
   wire [15:0] midSpikes;
-  // /Users/jake/EMPIRE/projects/ongoing/2026_039/CategoricalSNN.hs/synthesis/TopEntities.hs:316:1-16
+  // /Users/jake/EMPIRE/projects/ongoing/2026_039/CategoricalSNN.hs/synthesis/TopEntities.hs:374:1-16
   wire [527:0] results1;
-  // /Users/jake/EMPIRE/projects/ongoing/2026_039/CategoricalSNN.hs/synthesis/TopEntities.hs:316:1-16
+  // /Users/jake/EMPIRE/projects/ongoing/2026_039/CategoricalSNN.hs/synthesis/TopEntities.hs:374:1-16
   wire [263:0] results2;
   wire [31:0] eta;
   wire [16383:0] c$vec;
@@ -96,12 +96,12 @@ module snn32to16to8Flat
     wire [1023:0] map_in;
     assign map_in = c$vec[i_1*1024+:1024];
     wire signed [31:0] map_out;
-    // /Users/jake/EMPIRE/projects/ongoing/2026_039/CategoricalSNN.hs/synthesis/TopEntities.hs:316:1-16
+    // /Users/jake/EMPIRE/projects/ongoing/2026_039/CategoricalSNN.hs/synthesis/TopEntities.hs:374:1-16
     wire [1055:0] ws1;
-    // /Users/jake/EMPIRE/projects/ongoing/2026_039/CategoricalSNN.hs/synthesis/TopEntities.hs:316:1-16
+    // /Users/jake/EMPIRE/projects/ongoing/2026_039/CategoricalSNN.hs/synthesis/TopEntities.hs:374:1-16
     wire [1023:0] ws2;
     wire signed [31:0] result_0;
-    // /Users/jake/EMPIRE/projects/ongoing/2026_039/CategoricalSNN.hs/synthesis/TopEntities.hs:316:1-16
+    // /Users/jake/EMPIRE/projects/ongoing/2026_039/CategoricalSNN.hs/synthesis/TopEntities.hs:374:1-16
     wire [1023:0] c$ws2_app_arg;
     wire [1023:0] c$vec2;
     assign map_out = result_0;
@@ -191,12 +191,12 @@ module snn32to16to8Flat
     wire [511:0] map_in_0;
     assign map_in_0 = c$vec_0[i_4*512+:512];
     wire signed [31:0] map_out_0;
-    // /Users/jake/EMPIRE/projects/ongoing/2026_039/CategoricalSNN.hs/synthesis/TopEntities.hs:316:1-16
+    // /Users/jake/EMPIRE/projects/ongoing/2026_039/CategoricalSNN.hs/synthesis/TopEntities.hs:374:1-16
     wire [543:0] ws1_1;
-    // /Users/jake/EMPIRE/projects/ongoing/2026_039/CategoricalSNN.hs/synthesis/TopEntities.hs:316:1-16
+    // /Users/jake/EMPIRE/projects/ongoing/2026_039/CategoricalSNN.hs/synthesis/TopEntities.hs:374:1-16
     wire [511:0] ws2_0;
     wire signed [31:0] result_3;
-    // /Users/jake/EMPIRE/projects/ongoing/2026_039/CategoricalSNN.hs/synthesis/TopEntities.hs:316:1-16
+    // /Users/jake/EMPIRE/projects/ongoing/2026_039/CategoricalSNN.hs/synthesis/TopEntities.hs:374:1-16
     wire [511:0] c$ws2_app_arg_0;
     wire [511:0] c$vec2_0;
     assign map_out_0 = result_3;
@@ -368,7 +368,7 @@ module snn32to16to8Flat
     wire [31:0] \r'_2 ;
     wire [32:0] \c$r'_app_arg_1 ;
     wire signed [32:0] r_1;
-    // /Users/jake/EMPIRE/projects/ongoing/2026_039/CategoricalSNN.hs/synthesis/TopEntities.hs:316:1-16
+    // /Users/jake/EMPIRE/projects/ongoing/2026_039/CategoricalSNN.hs/synthesis/TopEntities.hs:374:1-16
     wire  fired;
     wire [32:0] result_6;
     wire signed [31:0] c$app_arg;
@@ -452,7 +452,7 @@ module snn32to16to8Flat
     wire [31:0] \r'_3 ;
     wire [32:0] \c$r'_app_arg_2 ;
     wire signed [32:0] r_2;
-    // /Users/jake/EMPIRE/projects/ongoing/2026_039/CategoricalSNN.hs/synthesis/TopEntities.hs:316:1-16
+    // /Users/jake/EMPIRE/projects/ongoing/2026_039/CategoricalSNN.hs/synthesis/TopEntities.hs:374:1-16
     wire  fired_0;
     wire [32:0] result_9;
     wire signed [31:0] c$app_arg_5;

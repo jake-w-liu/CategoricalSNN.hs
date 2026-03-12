@@ -1,6 +1,6 @@
 {
     "components": [
-        "snn4to3Flat"
+        "snn12to7to5to3Flat"
     ],
     "dependencies": {
         "transitive": []
@@ -30,25 +30,25 @@
     },
     "files": [
         {
-            "name": "snn4to3Flat_shim.cpp",
-            "sha256": "b47c0ffc341c7bf1b7cb9b5dde6bed4e41f5c6cd5ca8b1f9c434d56e736149cf"
+            "name": "snn12to7to5to3Flat_shim.cpp",
+            "sha256": "24f3afdac678911989fa8a118ab1dfef5e43fc40d25c3300af02c741ff2bec71"
         },
         {
-            "name": "snn4to3Flat.sdc",
+            "name": "snn12to7to5to3Flat.sdc",
             "sha256": "13d4c1aafcc09a84d81d3b60d513cb901384a10e27e5a5a16572a600f15895f3"
         },
         {
-            "name": "snn4to3Flat.v",
-            "sha256": "94b5bd9736e8dd2d6a39fa7fcaa4dc31f3d6564acb957333fc98782ee82c3928"
+            "name": "snn12to7to5to3Flat.v",
+            "sha256": "7dea31da6014d8ddb8308c8a60072dea4ebc78cb7d8eaa97ded9f9d802a7db1b"
         }
     ],
     "flags": [
         20,
         20
     ],
-    "hash": "28e1d1a419128ce745ee531f3cae82e3f08a6c0bc1bd33f3295f9d2a1dcfad47",
+    "hash": "d5752a08d97a14ddeb2f328221fea90e5cc48c59c1d50c84847e4e93951969c5",
     "top_component": {
-        "name": "snn4to3Flat",
+        "name": "snn12to7to5to3Flat",
         "ports_flat": [
             {
                 "direction": "in",
@@ -99,6 +99,62 @@
                 "direction": "in",
                 "is_clock": false,
                 "name": "eta_3",
+                "type_name": "",
+                "width": 1
+            },
+            {
+                "direction": "in",
+                "is_clock": false,
+                "name": "eta_4",
+                "type_name": "",
+                "width": 1
+            },
+            {
+                "direction": "in",
+                "is_clock": false,
+                "name": "eta_5",
+                "type_name": "",
+                "width": 1
+            },
+            {
+                "direction": "in",
+                "is_clock": false,
+                "name": "eta_6",
+                "type_name": "",
+                "width": 1
+            },
+            {
+                "direction": "in",
+                "is_clock": false,
+                "name": "eta_7",
+                "type_name": "",
+                "width": 1
+            },
+            {
+                "direction": "in",
+                "is_clock": false,
+                "name": "eta_8",
+                "type_name": "",
+                "width": 1
+            },
+            {
+                "direction": "in",
+                "is_clock": false,
+                "name": "eta_9",
+                "type_name": "",
+                "width": 1
+            },
+            {
+                "direction": "in",
+                "is_clock": false,
+                "name": "eta_10",
+                "type_name": "",
+                "width": 1
+            },
+            {
+                "direction": "in",
+                "is_clock": false,
+                "name": "eta_11",
                 "type_name": "",
                 "width": 1
             },

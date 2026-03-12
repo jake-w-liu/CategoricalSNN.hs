@@ -39,14 +39,14 @@
         },
         {
             "name": "snn8to4Flat.v",
-            "sha256": "fc5e64729fceb780c46624e3bb5a91481b5c92125b72f44ed27ad753da58280c"
+            "sha256": "93458d30b722fe4109d053b94db67693b808c3e6a8a7beae25c79f220ab918f5"
         }
     ],
     "flags": [
         20,
         20
     ],
-    "hash": "1f84644c6f80100d4877b1d96047e29c133d81ed39678103edf631b534f182bc",
+    "hash": "28cee14b20325fcd39a43796e43504c08b33526e00898fac29ad1324574b0a84",
     "top_component": {
         "name": "snn8to4Flat",
         "ports_flat": [
@@ -133,28 +133,28 @@
             {
                 "direction": "out",
                 "is_clock": false,
-                "name": "result_0",
+                "name": "c$ds_app_arg_0",
                 "type_name": "",
                 "width": 1
             },
             {
                 "direction": "out",
                 "is_clock": false,
-                "name": "result_1",
+                "name": "c$ds_app_arg_1",
                 "type_name": "",
                 "width": 1
             },
             {
                 "direction": "out",
                 "is_clock": false,
-                "name": "result_2",
+                "name": "c$ds_app_arg_2",
                 "type_name": "",
                 "width": 1
             },
             {
                 "direction": "out",
                 "is_clock": false,
-                "name": "result_3",
+                "name": "c$ds_app_arg_3",
                 "type_name": "",
                 "width": 1
             }

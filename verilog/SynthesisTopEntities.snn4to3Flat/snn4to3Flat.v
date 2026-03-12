@@ -14,19 +14,19 @@ module snn4to3Flat
     , input wire  eta_3
 
       // Outputs
-    , output wire  result_0
-    , output wire  result_1
-    , output wire  result_2
+    , output wire  c$ds_app_arg_0
+    , output wire  c$ds_app_arg_1
+    , output wire  c$ds_app_arg_2
     );
-  wire [95:0] c$app_arg;
-  wire [2:0] c$app_arg_0;
+  // /Users/jake/EMPIRE/projects/ongoing/2026_039/CategoricalSNN.hs/synthesis/TopEntities.hs:130:1-11
+  wire [95:0] c$ds_app_arg_6;
+  // /Users/jake/EMPIRE/projects/ongoing/2026_039/CategoricalSNN.hs/synthesis/TopEntities.hs:130:1-11
   reg [95:0] states = {32'sd0,   32'sd0,   32'sd0};
+  // /Users/jake/EMPIRE/projects/ongoing/2026_039/CategoricalSNN.hs/synthesis/TopEntities.hs:130:1-11
   wire [98:0] results;
   wire [3:0] eta;
-  wire [98:0] states_1;
   wire [383:0] c$vec2_0;
-  wire [98:0] result_projection;
-  wire [2:0] result;
+  wire [2:0] c$ds_app_arg;
 
   assign eta = {eta_0,   eta_1,   eta_2,
                 eta_3};
@@ -41,7 +41,7 @@ module snn4to3Flat
     assign map_out = $signed(map_in[32:1]);
 
 
-    assign c$app_arg[i*32+:32] = map_out;
+    assign c$ds_app_arg_6[i*32+:32] = map_out;
   end
   endgenerate
   // map end
@@ -56,19 +56,17 @@ module snn4to3Flat
     assign map_out_0 = map_in_0[0:0];
 
 
-    assign c$app_arg_0[i_0*1+:1] = map_out_0;
+    assign c$ds_app_arg[i_0*1+:1] = map_out_0;
   end
   endgenerate
   // map end
-
-  assign states_1 = {c$app_arg,   c$app_arg_0};
 
   // register begin
   always @(posedge clk or  posedge  rst) begin : states_register
     if ( rst) begin
       states <= {32'sd0,   32'sd0,   32'sd0};
     end else if (en) begin
-      states <= states_1[98:3];
+      states <= c$ds_app_arg_6;
     end
   end
   // register end
@@ -88,21 +86,25 @@ module snn4to3Flat
     wire [127:0] zipWith_in2_1;
     assign zipWith_in2_1 = c$vec2_0[i_3*128+:128];
     wire [32:0] c$n_1;
-    wire signed [31:0] result_7;
+    wire signed [31:0] result_0;
     wire signed [31:0] c$case_alt;
     wire [31:0] \r' ;
     wire [32:0] \c$r'_app_arg ;
     wire signed [32:0] r;
+    // /Users/jake/EMPIRE/projects/ongoing/2026_039/CategoricalSNN.hs/synthesis/TopEntities.hs:130:1-11
     wire  fired;
-    wire [32:0] result_6;
-    wire signed [31:0] c$app_arg_1;
-    wire [159:0] ws;
-    wire [127:0] ws1;
-    wire [127:0] c$ws1_app_arg;
-    wire signed [31:0] result_8;
+    wire [32:0] result;
+    wire signed [31:0] c$app_arg;
+    // /Users/jake/EMPIRE/projects/ongoing/2026_039/CategoricalSNN.hs/synthesis/TopEntities.hs:130:1-11
+    wire [159:0] ws1;
+    // /Users/jake/EMPIRE/projects/ongoing/2026_039/CategoricalSNN.hs/synthesis/TopEntities.hs:130:1-11
+    wire [127:0] ws2;
+    // /Users/jake/EMPIRE/projects/ongoing/2026_039/CategoricalSNN.hs/synthesis/TopEntities.hs:130:1-11
+    wire [127:0] c$ws2_app_arg;
+    wire signed [31:0] result_1;
     wire signed [31:0] c$case_alt_0;
-    wire [16:0] c$app_arg_2;
-    wire [15:0] c$app_arg_3;
+    wire [16:0] c$app_arg_0;
+    wire [15:0] c$app_arg_1;
     wire [15:0] rL;
     wire [47:0] rR;
     wire [63:0] ds3;
@@ -114,15 +116,15 @@ module snn4to3Flat
     wire [127:0] c$vec2;
     wire [47:0] c$bv_5;
     wire [47:0] c$bv_6;
-    assign c$n_1 = result_6;
+    assign c$n_1 = result;
 
     assign c$bv = (\r' );
 
-    assign result_7 = ((( \c$r'_app_arg [33-1] ) ^ ( c$bv[32-1] )) == 1'b0) ? ($signed(\r' )) : c$case_alt;
+    assign result_0 = ((( \c$r'_app_arg [33-1] ) ^ ( c$bv[32-1] )) == 1'b0) ? ($signed(\r' )) : c$case_alt;
 
-    assign c$bv_0 = (($unsigned(result_8)));
+    assign c$bv_0 = (($unsigned(result_1)));
 
-    assign c$bv_1 = (($unsigned(($signed(ws[32-1:0])))));
+    assign c$bv_1 = (($unsigned(($signed(ws1[32-1:0])))));
 
     assign c$case_alt = ((( c$bv_0[32-1] ) & ( c$bv_1[32-1] )) == 1'b0) ? 32'sd2147483647 : -32'sd2147483648;
 
@@ -132,28 +134,28 @@ module snn4to3Flat
 
     assign \c$r'_app_arg  = ($unsigned(r));
 
-    assign r = result_8 + ($signed(ws[32-1:0]));
+    assign r = result_1 + ($signed(ws1[32-1:0]));
 
-    assign fired = result_7 >= 32'sd65536;
+    assign fired = result_0 >= 32'sd65536;
 
-    assign result_6 = {c$app_arg_1,   fired};
+    assign result = {c$app_arg,   fired};
 
-    assign c$app_arg_1 = fired ? 32'sd0 : result_7;
+    assign c$app_arg = fired ? 32'sd0 : result_0;
 
-    assign ws = {32'sd0,   ws1};
+    assign ws1 = {32'sd0,   ws2};
 
-    assign c$vec2 = (ws[160-1 : 32]);
+    assign c$vec2 = (ws1[160-1 : 32]);
 
     // zipWith start
     genvar i_1;
 
     for (i_1 = 0; i_1 < 4; i_1 = i_1 + 1) begin : zipWith
       wire signed [31:0] zipWith_in1;
-      assign zipWith_in1 = c$ws1_app_arg[i_1*32+:32];
+      assign zipWith_in1 = c$ws2_app_arg[i_1*32+:32];
       wire signed [31:0] zipWith_in2;
       assign zipWith_in2 = c$vec2[i_1*32+:32];
       wire signed [31:0] c$n;
-      wire signed [31:0] result_9;
+      wire signed [31:0] result_3;
     wire signed [31:0] c$case_alt_4;
     wire [31:0] \r'_1 ;
     wire [32:0] \c$r'_app_arg_0 ;
@@ -162,11 +164,11 @@ module snn4to3Flat
     wire [31:0] c$bv_3;
     wire [31:0] c$bv_4;
     wire [32:0] \r'_projection_0 ;
-    assign c$n = result_9;
+    assign c$n = result_3;
 
     assign c$bv_2 = (\r'_1 );
 
-    assign result_9 = ((( \c$r'_app_arg_0 [33-1] ) ^ ( c$bv_2[32-1] )) == 1'b0) ? ($signed(\r'_1 )) : c$case_alt_4;
+    assign result_3 = ((( \c$r'_app_arg_0 [33-1] ) ^ ( c$bv_2[32-1] )) == 1'b0) ? ($signed(\r'_1 )) : c$case_alt_4;
 
     assign c$bv_3 = (($unsigned(zipWith_in2)));
 
@@ -183,7 +185,7 @@ module snn4to3Flat
     assign r_0 = zipWith_in2 + zipWith_in1;
 
 
-      assign ws1[i_1*32+:32] = c$n;
+      assign ws2[i_1*32+:32] = c$n;
     end
 
     // zipWith end
@@ -197,28 +199,28 @@ module snn4to3Flat
       wire  zipWith_in2_0;
       assign zipWith_in2_0 = eta[i_2*1+:1];
       wire signed [31:0] c$n_0;
-      wire signed [31:0] result_10;
-    assign c$n_0 = result_10;
+      wire signed [31:0] result_4;
+    assign c$n_0 = result_4;
 
-    assign result_10 = zipWith_in2_0 ? zipWith_in1_0 : 32'sd0;
+    assign result_4 = zipWith_in2_0 ? zipWith_in1_0 : 32'sd0;
 
 
-      assign c$ws1_app_arg[i_2*32+:32] = c$n_0;
+      assign c$ws2_app_arg[i_2*32+:32] = c$n_0;
     end
 
     // zipWith end
 
     assign c$bv_5 = (rR >> (64'sd16));
 
-    assign result_8 = (((~ (| (c$app_arg_2))) | (& (c$app_arg_2))) == 1'b1) ? ($signed((c$bv_5[0+:32]))) : c$case_alt_0;
+    assign result_1 = (((~ (| (c$app_arg_0))) | (& (c$app_arg_0))) == 1'b1) ? ($signed((c$bv_5[0+:32]))) : c$case_alt_0;
 
-    assign c$case_alt_0 = (( c$app_arg_3[16-1] ) == 1'b0) ? 32'sd2147483647 : -32'sd2147483648;
+    assign c$case_alt_0 = (( c$app_arg_1[16-1] ) == 1'b0) ? 32'sd2147483647 : -32'sd2147483648;
 
     assign c$bv_6 = (rR);
 
-    assign c$app_arg_2 = ({((( c$bv_6[48-1] ))),c$app_arg_3});
+    assign c$app_arg_0 = ({((( c$bv_6[48-1] ))),c$app_arg_1});
 
-    assign c$app_arg_3 = rL;
+    assign c$app_arg_1 = rL;
 
     assign rL = ds3[63:48];
 
@@ -234,16 +236,11 @@ module snn4to3Flat
   endgenerate
   // zipWith end
 
-  assign result_projection = {c$app_arg,
-                              c$app_arg_0};
+  assign c$ds_app_arg_0 = c$ds_app_arg[2:2];
 
-  assign result = result_projection[2:0];
+  assign c$ds_app_arg_1 = c$ds_app_arg[1:1];
 
-  assign result_0 = result[2:2];
-
-  assign result_1 = result[1:1];
-
-  assign result_2 = result[0:0];
+  assign c$ds_app_arg_2 = c$ds_app_arg[0:0];
 
 
 endmodule

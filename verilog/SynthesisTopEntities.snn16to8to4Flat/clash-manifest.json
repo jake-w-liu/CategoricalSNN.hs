@@ -39,14 +39,14 @@
         },
         {
             "name": "snn16to8to4Flat.v",
-            "sha256": "fb0af38e12c7f355386ec7098d21f002f0beb7dc671aae2a6a5d6a9125fb2b8b"
+            "sha256": "e76045b275cab4654441fdd994b1446d078e1f2ecad2c5d9875d5d8fe4909b3b"
         }
     ],
     "flags": [
         20,
         20
     ],
-    "hash": "5c80ca624a158150bc4dcd9a3f4607dbc40e603ee6adba02fa4c9fd4ca9bfb5c",
+    "hash": "a0615408ef9f60a389e6ce7ce0946090dc130b09e98fadda9b37e1ac4eb5ac95",
     "top_component": {
         "name": "snn16to8to4Flat",
         "ports_flat": [

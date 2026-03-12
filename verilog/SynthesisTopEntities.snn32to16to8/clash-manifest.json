@@ -46,7 +46,7 @@
         20,
         20
     ],
-    "hash": "0a78b269ddb73e4114a99ac4460ab9e171be55aa4684d04567c82cf47be3d84e",
+    "hash": "b94b16ed25b46ac16a2c5903bca81429a185f73cdadfa7062d8f4dae081b8a23",
     "top_component": {
         "name": "snn32to16to8",
         "ports_flat": [

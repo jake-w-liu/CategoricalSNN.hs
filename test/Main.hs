@@ -237,6 +237,47 @@ networkTests =
                                      (bernoulliSpikeTrain 100 0.1 45)))
                    ]
       assertEqual "Two-layer exact match" (simulate catNet inputs) (simulate fltNet inputs)
+
+  , testCase "Three-layer irregular categorical = flat (exact)" $ do
+      let w12to7 :: C.Vec 7 (C.Vec 12 Weight)
+          w12to7 =
+               ( 0.25 :> (-0.10) :> 0.15 :> 0.00 :> 0.20 :> (-0.05) :> 0.10 :> 0.30 :> (-0.12) :> 0.18 :> 0.00 :> 0.22 :> C.Nil)
+            :> ((-0.18) :> 0.24 :> 0.00 :> 0.12 :> 0.08 :> 0.16 :> (-0.14) :> 0.28 :> 0.11 :> 0.00 :> 0.20 :> (-0.06) :> C.Nil)
+            :> ( 0.05 :> 0.19 :> (-0.22) :> 0.31 :> 0.00 :> 0.14 :> 0.26 :> (-0.09) :> 0.17 :> 0.07 :> (-0.04) :> 0.12 :> C.Nil)
+            :> ( 0.29 :> 0.00 :> 0.13 :> (-0.17) :> 0.21 :> 0.09 :> 0.00 :> 0.24 :> (-0.08) :> 0.16 :> 0.06 :> (-0.11) :> C.Nil)
+            :> ((-0.07) :> 0.27 :> 0.18 :> 0.00 :> (-0.15) :> 0.23 :> 0.12 :> 0.05 :> 0.19 :> (-0.10) :> 0.14 :> 0.00 :> C.Nil)
+            :> ( 0.11 :> 0.04 :> 0.25 :> (-0.13) :> 0.28 :> 0.00 :> 0.09 :> (-0.16) :> 0.22 :> 0.15 :> 0.03 :> 0.18 :> C.Nil)
+            :> ( 0.00 :> 0.21 :> (-0.05) :> 0.18 :> 0.24 :> 0.10 :> (-0.09) :> 0.13 :> 0.00 :> 0.20 :> 0.16 :> (-0.12) :> C.Nil)
+            :> C.Nil
+          w7to5 :: C.Vec 5 (C.Vec 7 Weight)
+          w7to5 =
+               ( 0.30 :> (-0.18) :> 0.22 :> 0.00 :> 0.14 :> 0.19 :> (-0.11) :> C.Nil)
+            :> ((-0.09) :> 0.27 :> 0.16 :> 0.21 :> 0.00 :> (-0.13) :> 0.24 :> C.Nil)
+            :> ( 0.18 :> 0.00 :> (-0.15) :> 0.26 :> 0.12 :> 0.20 :> 0.07 :> C.Nil)
+            :> ( 0.05 :> 0.23 :> 0.11 :> (-0.17) :> 0.29 :> 0.00 :> 0.15 :> C.Nil)
+            :> ((-0.12) :> 0.14 :> 0.25 :> 0.09 :> 0.18 :> (-0.08) :> 0.22 :> C.Nil)
+            :> C.Nil
+          w5to3 :: C.Vec 3 (C.Vec 5 Weight)
+          w5to3 =
+               ( 0.34 :> (-0.16) :> 0.21 :> 0.00 :> 0.18 :> C.Nil)
+            :> ( 0.09 :> 0.28 :> (-0.14) :> 0.24 :> 0.11 :> C.Nil)
+            :> ((-0.10) :> 0.17 :> 0.26 :> 0.13 :> 0.20 :> C.Nil)
+            :> C.Nil
+          params = LIFParams 0.8 0.92 0.0
+          catNet = snnNetwork3Layer w12to7 w7to5 w5to3 params
+          fltNet = flatNetwork3Layer w12to7 w7to5 w5to3 params
+          rates12 = [0.07, 0.18, 0.29, 0.41, 0.13, 0.34, 0.22, 0.09, 0.37, 0.16, 0.28, 0.45 :: Double]
+          channelTrains =
+            [ bernoulliSpikeTrain 120 rate seed'
+            | (rate, seed') <- zip rates12 [110 .. 121]
+            ]
+          inputs =
+            [ C.map
+                (\i -> (channelTrains P.!! P.fromIntegral i) P.!! t)
+                (C.indicesI :: C.Vec 12 (C.Index 12))
+            | t <- [0 .. 119]
+            ]
+      assertEqual "Three-layer irregular exact match" (simulate catNet inputs) (simulate fltNet inputs)
   ]
 
 -- ============================================================

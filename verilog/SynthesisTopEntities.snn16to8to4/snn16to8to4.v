@@ -41,8 +41,8 @@ module snn16to8to4
   32'sd0},   {32'sd0,   32'sd0,   32'sd0,   32'sd0}};
   wire [255:0] sf;
   wire [127:0] sg;
-  wire [263:0] results;
-  wire [131:0] results_0;
+  wire [131:0] results;
+  wire [263:0] results_0;
   wire [15:0] eta;
   wire [4095:0] c$vec;
   wire [1023:0] c$vec_0;
@@ -152,7 +152,7 @@ module snn16to8to4
   generate
   for (i_2=0; i_2 < 8; i_2 = i_2 + 1) begin : map_0
     wire [32:0] map_in_0;
-    assign map_in_0 = results[i_2*33+:33];
+    assign map_in_0 = results_0[i_2*33+:33];
     wire signed [31:0] map_out_0;
     assign map_out_0 = $signed(map_in_0[32:1]);
 
@@ -167,7 +167,7 @@ module snn16to8to4
   generate
   for (i_3=0; i_3 < 8; i_3 = i_3 + 1) begin : map_1
     wire [32:0] map_in_1;
-    assign map_in_1 = results[i_3*33+:33];
+    assign map_in_1 = results_0[i_3*33+:33];
     wire  map_out_1;
     assign map_out_1 = map_in_1[0:0];
 
@@ -284,7 +284,7 @@ module snn16to8to4
   generate
   for (i_7=0; i_7 < 4; i_7 = i_7 + 1) begin : map_3
     wire [32:0] map_in_3;
-    assign map_in_3 = results_0[i_7*33+:33];
+    assign map_in_3 = results[i_7*33+:33];
     wire signed [31:0] map_out_3;
     assign map_out_3 = $signed(map_in_3[32:1]);
 
@@ -299,7 +299,7 @@ module snn16to8to4
   generate
   for (i_8=0; i_8 < 4; i_8 = i_8 + 1) begin : map_4
     wire [32:0] map_in_4;
-    assign map_in_4 = results_0[i_8*33+:33];
+    assign map_in_4 = results[i_8*33+:33];
     wire  map_out_4;
     assign map_out_4 = map_in_4[0:0];
 
@@ -330,11 +330,11 @@ module snn16to8to4
   // zipWith start
   genvar i_9;
   generate
-  for (i_9 = 0; i_9 < 8; i_9 = i_9 + 1) begin : zipWith_3
+  for (i_9 = 0; i_9 < 4; i_9 = i_9 + 1) begin : zipWith_3
     wire signed [31:0] zipWith_in1_3;
-    assign zipWith_in1_3 = sf[i_9*32+:32];
+    assign zipWith_in1_3 = sg[i_9*32+:32];
     wire signed [31:0] zipWith_in2_3;
-    assign zipWith_in2_3 = c$results_app_arg[i_9*32+:32];
+    assign zipWith_in2_3 = c$results_app_arg_0[i_9*32+:32];
     wire [32:0] c$n_3;
     wire signed [31:0] result_14;
     wire signed [31:0] c$case_alt_5;
@@ -413,11 +413,11 @@ module snn16to8to4
   // zipWith start
   genvar i_10;
   generate
-  for (i_10 = 0; i_10 < 4; i_10 = i_10 + 1) begin : zipWith_4
+  for (i_10 = 0; i_10 < 8; i_10 = i_10 + 1) begin : zipWith_4
     wire signed [31:0] zipWith_in1_4;
-    assign zipWith_in1_4 = sg[i_10*32+:32];
+    assign zipWith_in1_4 = sf[i_10*32+:32];
     wire signed [31:0] zipWith_in2_4;
-    assign zipWith_in2_4 = c$results_app_arg_0[i_10*32+:32];
+    assign zipWith_in2_4 = c$results_app_arg[i_10*32+:32];
     wire [32:0] c$n_4;
     wire signed [31:0] result_16;
     wire signed [31:0] c$case_alt_8;

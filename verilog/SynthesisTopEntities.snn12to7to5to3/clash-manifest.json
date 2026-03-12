@@ -1,6 +1,6 @@
 {
     "components": [
-        "snn4to3Flat"
+        "snn12to7to5to3"
     ],
     "dependencies": {
         "transitive": []
@@ -30,25 +30,25 @@
     },
     "files": [
         {
-            "name": "snn4to3Flat_shim.cpp",
-            "sha256": "b47c0ffc341c7bf1b7cb9b5dde6bed4e41f5c6cd5ca8b1f9c434d56e736149cf"
+            "name": "snn12to7to5to3_shim.cpp",
+            "sha256": "532cacb88d54f98857656ce978a5b7716ea1c5d2dd0a5451a6eea8af34089844"
         },
         {
-            "name": "snn4to3Flat.sdc",
+            "name": "snn12to7to5to3.sdc",
             "sha256": "13d4c1aafcc09a84d81d3b60d513cb901384a10e27e5a5a16572a600f15895f3"
         },
         {
-            "name": "snn4to3Flat.v",
-            "sha256": "94b5bd9736e8dd2d6a39fa7fcaa4dc31f3d6564acb957333fc98782ee82c3928"
+            "name": "snn12to7to5to3.v",
+            "sha256": "28b802d1e71c735fc8232afb7e01ae05e3f6465119cca941036c415f3630941f"
         }
     ],
     "flags": [
         20,
         20
     ],
-    "hash": "28e1d1a419128ce745ee531f3cae82e3f08a6c0bc1bd33f3295f9d2a1dcfad47",
+    "hash": "f90855a373afde11e0d44b2f993995d8b01bcc38c0d91af012c5eeb6d3fd7d04",
     "top_component": {
-        "name": "snn4to3Flat",
+        "name": "snn12to7to5to3",
         "ports_flat": [
             {
                 "direction": "in",
@@ -103,23 +103,79 @@
                 "width": 1
             },
             {
-                "direction": "out",
+                "direction": "in",
                 "is_clock": false,
-                "name": "c$ds_app_arg_0",
+                "name": "eta_4",
+                "type_name": "",
+                "width": 1
+            },
+            {
+                "direction": "in",
+                "is_clock": false,
+                "name": "eta_5",
+                "type_name": "",
+                "width": 1
+            },
+            {
+                "direction": "in",
+                "is_clock": false,
+                "name": "eta_6",
+                "type_name": "",
+                "width": 1
+            },
+            {
+                "direction": "in",
+                "is_clock": false,
+                "name": "eta_7",
+                "type_name": "",
+                "width": 1
+            },
+            {
+                "direction": "in",
+                "is_clock": false,
+                "name": "eta_8",
+                "type_name": "",
+                "width": 1
+            },
+            {
+                "direction": "in",
+                "is_clock": false,
+                "name": "eta_9",
+                "type_name": "",
+                "width": 1
+            },
+            {
+                "direction": "in",
+                "is_clock": false,
+                "name": "eta_10",
+                "type_name": "",
+                "width": 1
+            },
+            {
+                "direction": "in",
+                "is_clock": false,
+                "name": "eta_11",
                 "type_name": "",
                 "width": 1
             },
             {
                 "direction": "out",
                 "is_clock": false,
-                "name": "c$ds_app_arg_1",
+                "name": "result_0",
                 "type_name": "",
                 "width": 1
             },
             {
                 "direction": "out",
                 "is_clock": false,
-                "name": "c$ds_app_arg_2",
+                "name": "result_1",
+                "type_name": "",
+                "width": 1
+            },
+            {
+                "direction": "out",
+                "is_clock": false,
+                "name": "result_2",
                 "type_name": "",
                 "width": 1
             }

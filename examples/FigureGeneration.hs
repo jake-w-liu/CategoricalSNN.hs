@@ -76,6 +76,7 @@ experiment5_scalability = do
   putStrLn "--- Experiment 5: Scalability Sweep ---"
 
   let params = defaultLIFParams
+      irregularParams = LIFParams 0.8 0.92 0.0
       summarizeRates rates =
         let rateMin = P.minimum rates
             rateMax = P.maximum rates
@@ -95,6 +96,8 @@ experiment5_scalability = do
               ]
       repeatedRates =
         [0.3, 0.2, 0.4, 0.1, 0.35, 0.25, 0.15, 0.3 :: P.Double]
+      irregularRates12 =
+        [0.07, 0.18, 0.29, 0.41, 0.13, 0.34, 0.22, 0.09, 0.37, 0.16, 0.28, 0.45 :: P.Double]
 
   -- Baseline scale: 4 -> 3
   let w_4_3 :: C.Vec 3 (C.Vec 4 Weight)
@@ -199,6 +202,26 @@ experiment5_scalability = do
       fltOut_16 = simulate fltNet_16_8_4 inputs16
       match_16 = P.all P.id (zipWith (P.==) catOut_16 fltOut_16)
 
+  -- Scale 2b: irregular 12 -> 7 -> 5 -> 3
+  let channelTrains12 =
+        [ bernoulliSpikeTrain numTimesteps rate seed'
+        | (rate, seed') <- zip irregularRates12 [110 .. 121]
+        ]
+
+      inputs12 :: [C.Vec 12 Spike]
+      inputs12 =
+        [ C.map
+            (\i -> (channelTrains12 P.!! P.fromIntegral i) P.!! t)
+            (C.indicesI :: C.Vec 12 (C.Index 12))
+        | t <- [0 .. numTimesteps P.- 1]
+        ]
+
+      catNet_12_7_5_3 = snnNetwork3Layer weights12to7 weights7to5 weights5to3 irregularParams
+      fltNet_12_7_5_3 = flatNetwork3Layer weights12to7 weights7to5 weights5to3 irregularParams
+      catOut_12 = simulate catNet_12_7_5_3 inputs12
+      fltOut_12 = simulate fltNet_12_7_5_3 inputs12
+      match_12 = P.all P.id (zipWith (P.==) catOut_12 fltOut_12)
+
   -- Scale 3: 32 -> 16 -> 8 (structured two-layer pyramid)
   let w_32_16 :: C.Vec 16 (C.Vec 32 Weight)
       w_32_16 = C.repeat (C.repeat 0.0625)
@@ -225,6 +248,8 @@ experiment5_scalability = do
   -- Compute firing rates for each scale
   let rates_8_4 = map (\i -> firingRate (map (\v -> v C.!! i) catOut_8_4))
                       [0, 1, 2, 3 :: C.Index 4]
+      rates_12 = map (\i -> firingRate (map (\v -> v C.!! i) catOut_12))
+                     [0, 1, 2 :: C.Index 3]
       rates_16 = map (\i -> firingRate (map (\v -> v C.!! i) catOut_16))
                      [0, 1, 2, 3 :: C.Index 4]
       rates_32 = map (\i -> firingRate (map (\v -> v C.!! i) catOut_32))
@@ -234,6 +259,7 @@ experiment5_scalability = do
       rows = [ formatSummaryRow "4to3" 1 4 3 match_4_3 rates_4_3
              , formatSummaryRow "4to3to2" 2 4 2 match_4_3_2 rates_4_3_2
              , formatSummaryRow "8to4" 1 8 4 match_8_4 rates_8_4
+             , formatSummaryRow "12to7to5to3" 3 12 3 match_12 rates_12
              , formatSummaryRow "16to8to4" 2 16 4 match_16 rates_16
              , formatSummaryRow "32to16to8" 2 32 8 match_32 rates_32
              ]
@@ -241,9 +267,11 @@ experiment5_scalability = do
   writeFile (baseDir ++ "experiment5_scalability.csv") (header ++ "\n" ++ unlines rows)
 
   putStrLn ("  8->4 single layer match: " ++ P.show match_8_4)
+  putStrLn ("  12->7->5->3 irregular match: " ++ P.show match_12)
   putStrLn ("  16->8->4 two-layer match: " ++ P.show match_16)
   putStrLn ("  32->16->8 two-layer match: " ++ P.show match_32)
   putStrLn ("  Firing rates 8->4: " ++ P.show rates_8_4)
+  putStrLn ("  Firing rates 12->7->5->3: " ++ P.show rates_12)
   putStrLn ("  Firing rates 16->8->4: " ++ P.show rates_16)
   putStrLn ("  Firing rates 32->16->8: " ++ P.show rates_32)
   putStrLn ""
