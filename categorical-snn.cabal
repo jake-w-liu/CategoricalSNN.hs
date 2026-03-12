@@ -1,0 +1,93 @@
+cabal-version:      2.4
+name:               categorical-snn
+version:            0.1.0.0
+synopsis:           A Category-Theoretic HDL for Neuromorphic Computing
+description:        Formalizes SNN composition as morphisms in a symmetric monoidal
+                    category, embedded in Haskell via Clash for hardware synthesis.
+license:            BSD-3-Clause
+author:             Jake W. Liu
+maintainer:         jwliu@ntut.edu.tw
+category:           Hardware
+build-type:         Simple
+
+library
+  exposed-modules:
+    CategoricalSNN
+    CategoricalSNN.Category
+    CategoricalSNN.Neuron
+    CategoricalSNN.Synapse
+    CategoricalSNN.Network
+    CategoricalSNN.Simulation
+    CategoricalSNN.TopEntity
+  other-modules:
+    CategoricalSNN.Types
+  build-depends:
+    base >= 4.17 && < 5,
+    clash-prelude >= 1.8 && < 1.10,
+    deepseq >= 1.4 && < 1.6
+  hs-source-dirs:   src
+  default-language:  Haskell2010
+  default-extensions:
+    DataKinds
+    TypeFamilies
+    TypeOperators
+    ScopedTypeVariables
+    FlexibleContexts
+    FlexibleInstances
+    MultiParamTypeClasses
+    GADTs
+    RankNTypes
+    NoImplicitPrelude
+    DeriveGeneric
+    DeriveAnyClass
+
+executable experiments
+  main-is:          Experiments.hs
+  build-depends:
+    base >= 4.17 && < 5,
+    categorical-snn,
+    clash-prelude >= 1.8 && < 1.10
+  hs-source-dirs:   examples
+  default-language:  Haskell2010
+  default-extensions:
+    DataKinds
+    TypeFamilies
+    TypeOperators
+    ScopedTypeVariables
+    FlexibleContexts
+    NoImplicitPrelude
+
+executable figure-generation
+  main-is:          FigureGeneration.hs
+  build-depends:
+    base >= 4.17 && < 5,
+    categorical-snn,
+    clash-prelude >= 1.8 && < 1.10
+  hs-source-dirs:   examples
+  default-language:  Haskell2010
+  default-extensions:
+    DataKinds
+    TypeFamilies
+    TypeOperators
+    ScopedTypeVariables
+    FlexibleContexts
+    NoImplicitPrelude
+
+test-suite tests
+  type:             exitcode-stdio-1.0
+  main-is:          Main.hs
+  build-depends:
+    base >= 4.17 && < 5,
+    categorical-snn,
+    clash-prelude >= 1.8 && < 1.10,
+    tasty >= 1.4,
+    tasty-hunit >= 0.10
+  hs-source-dirs:   test
+  default-language:  Haskell2010
+  default-extensions:
+    DataKinds
+    TypeFamilies
+    TypeOperators
+    ScopedTypeVariables
+    FlexibleContexts
+    NoImplicitPrelude

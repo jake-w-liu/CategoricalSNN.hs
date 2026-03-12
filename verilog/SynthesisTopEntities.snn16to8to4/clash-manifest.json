@@ -1,0 +1,220 @@
+{
+    "components": [
+        "snn16to8to4"
+    ],
+    "dependencies": {
+        "transitive": []
+    },
+    "domains": {
+        "IntelSystem": {
+            "active_edge": "Rising",
+            "init_behavior": "Defined",
+            "period": 10000,
+            "reset_kind": "Asynchronous",
+            "reset_polarity": "ActiveHigh"
+        },
+        "System": {
+            "active_edge": "Rising",
+            "init_behavior": "Defined",
+            "period": 10000,
+            "reset_kind": "Asynchronous",
+            "reset_polarity": "ActiveHigh"
+        },
+        "XilinxSystem": {
+            "active_edge": "Rising",
+            "init_behavior": "Defined",
+            "period": 10000,
+            "reset_kind": "Synchronous",
+            "reset_polarity": "ActiveHigh"
+        }
+    },
+    "files": [
+        {
+            "name": "snn16to8to4_shim.cpp",
+            "sha256": "16df5107c255e91470f279ab5227bc5646aa1a637af8628bc27be27b9b7f8c66"
+        },
+        {
+            "name": "snn16to8to4.sdc",
+            "sha256": "13d4c1aafcc09a84d81d3b60d513cb901384a10e27e5a5a16572a600f15895f3"
+        },
+        {
+            "name": "snn16to8to4.v",
+            "sha256": "9ff4bd006d51f62f087ed956036e668ea9c6c9686869de65e8a583629383f63e"
+        }
+    ],
+    "flags": [
+        20,
+        20
+    ],
+    "hash": "0db2d8e6e81132a07cae5386086087a8cc0c1224ce5d6195b221071dc66d84e9",
+    "top_component": {
+        "name": "snn16to8to4",
+        "ports_flat": [
+            {
+                "direction": "in",
+                "domain": "System",
+                "is_clock": true,
+                "name": "clk",
+                "type_name": "",
+                "width": 1
+            },
+            {
+                "direction": "in",
+                "domain": "System",
+                "is_clock": false,
+                "name": "rst",
+                "type_name": "",
+                "width": 1
+            },
+            {
+                "direction": "in",
+                "domain": "System",
+                "is_clock": false,
+                "name": "en",
+                "type_name": "",
+                "width": 1
+            },
+            {
+                "direction": "in",
+                "is_clock": false,
+                "name": "eta_0",
+                "type_name": "",
+                "width": 1
+            },
+            {
+                "direction": "in",
+                "is_clock": false,
+                "name": "eta_1",
+                "type_name": "",
+                "width": 1
+            },
+            {
+                "direction": "in",
+                "is_clock": false,
+                "name": "eta_2",
+                "type_name": "",
+                "width": 1
+            },
+            {
+                "direction": "in",
+                "is_clock": false,
+                "name": "eta_3",
+                "type_name": "",
+                "width": 1
+            },
+            {
+                "direction": "in",
+                "is_clock": false,
+                "name": "eta_4",
+                "type_name": "",
+                "width": 1
+            },
+            {
+                "direction": "in",
+                "is_clock": false,
+                "name": "eta_5",
+                "type_name": "",
+                "width": 1
+            },
+            {
+                "direction": "in",
+                "is_clock": false,
+                "name": "eta_6",
+                "type_name": "",
+                "width": 1
+            },
+            {
+                "direction": "in",
+                "is_clock": false,
+                "name": "eta_7",
+                "type_name": "",
+                "width": 1
+            },
+            {
+                "direction": "in",
+                "is_clock": false,
+                "name": "eta_8",
+                "type_name": "",
+                "width": 1
+            },
+            {
+                "direction": "in",
+                "is_clock": false,
+                "name": "eta_9",
+                "type_name": "",
+                "width": 1
+            },
+            {
+                "direction": "in",
+                "is_clock": false,
+                "name": "eta_10",
+                "type_name": "",
+                "width": 1
+            },
+            {
+                "direction": "in",
+                "is_clock": false,
+                "name": "eta_11",
+                "type_name": "",
+                "width": 1
+            },
+            {
+                "direction": "in",
+                "is_clock": false,
+                "name": "eta_12",
+                "type_name": "",
+                "width": 1
+            },
+            {
+                "direction": "in",
+                "is_clock": false,
+                "name": "eta_13",
+                "type_name": "",
+                "width": 1
+            },
+            {
+                "direction": "in",
+                "is_clock": false,
+                "name": "eta_14",
+                "type_name": "",
+                "width": 1
+            },
+            {
+                "direction": "in",
+                "is_clock": false,
+                "name": "eta_15",
+                "type_name": "",
+                "width": 1
+            },
+            {
+                "direction": "out",
+                "is_clock": false,
+                "name": "result_0",
+                "type_name": "",
+                "width": 1
+            },
+            {
+                "direction": "out",
+                "is_clock": false,
+                "name": "result_1",
+                "type_name": "",
+                "width": 1
+            },
+            {
+                "direction": "out",
+                "is_clock": false,
+                "name": "result_2",
+                "type_name": "",
+                "width": 1
+            },
+            {
+                "direction": "out",
+                "is_clock": false,
+                "name": "result_3",
+                "type_name": "",
+                "width": 1
+            }
+        ]
+    },
+    "version": "unstable"
+}

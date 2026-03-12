@@ -1,0 +1,129 @@
+{
+    "components": [
+        "snn4to3Flat"
+    ],
+    "dependencies": {
+        "transitive": []
+    },
+    "domains": {
+        "IntelSystem": {
+            "active_edge": "Rising",
+            "init_behavior": "Defined",
+            "period": 10000,
+            "reset_kind": "Asynchronous",
+            "reset_polarity": "ActiveHigh"
+        },
+        "System": {
+            "active_edge": "Rising",
+            "init_behavior": "Defined",
+            "period": 10000,
+            "reset_kind": "Asynchronous",
+            "reset_polarity": "ActiveHigh"
+        },
+        "XilinxSystem": {
+            "active_edge": "Rising",
+            "init_behavior": "Defined",
+            "period": 10000,
+            "reset_kind": "Synchronous",
+            "reset_polarity": "ActiveHigh"
+        }
+    },
+    "files": [
+        {
+            "name": "snn4to3Flat_shim.cpp",
+            "sha256": "b47c0ffc341c7bf1b7cb9b5dde6bed4e41f5c6cd5ca8b1f9c434d56e736149cf"
+        },
+        {
+            "name": "snn4to3Flat.sdc",
+            "sha256": "13d4c1aafcc09a84d81d3b60d513cb901384a10e27e5a5a16572a600f15895f3"
+        },
+        {
+            "name": "snn4to3Flat.v",
+            "sha256": "244459b7caa9f0c973ec8e07acf9b6c354dd5109dfba97704bc3b950871ce7e1"
+        }
+    ],
+    "flags": [
+        20,
+        20
+    ],
+    "hash": "db6280969ecf243c0a816f3814f6fc4f7d77ffa739fa5790e46e3d1c2a6a41d2",
+    "top_component": {
+        "name": "snn4to3Flat",
+        "ports_flat": [
+            {
+                "direction": "in",
+                "domain": "System",
+                "is_clock": true,
+                "name": "clk",
+                "type_name": "",
+                "width": 1
+            },
+            {
+                "direction": "in",
+                "domain": "System",
+                "is_clock": false,
+                "name": "rst",
+                "type_name": "",
+                "width": 1
+            },
+            {
+                "direction": "in",
+                "domain": "System",
+                "is_clock": false,
+                "name": "en",
+                "type_name": "",
+                "width": 1
+            },
+            {
+                "direction": "in",
+                "is_clock": false,
+                "name": "eta_0",
+                "type_name": "",
+                "width": 1
+            },
+            {
+                "direction": "in",
+                "is_clock": false,
+                "name": "eta_1",
+                "type_name": "",
+                "width": 1
+            },
+            {
+                "direction": "in",
+                "is_clock": false,
+                "name": "eta_2",
+                "type_name": "",
+                "width": 1
+            },
+            {
+                "direction": "in",
+                "is_clock": false,
+                "name": "eta_3",
+                "type_name": "",
+                "width": 1
+            },
+            {
+                "direction": "out",
+                "is_clock": false,
+                "name": "result_0",
+                "type_name": "",
+                "width": 1
+            },
+            {
+                "direction": "out",
+                "is_clock": false,
+                "name": "result_1",
+                "type_name": "",
+                "width": 1
+            },
+            {
+                "direction": "out",
+                "is_clock": false,
+                "name": "result_2",
+                "type_name": "",
+                "width": 1
+            }
+        ]
+    },
+    "version": "unstable"
+}
