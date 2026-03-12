@@ -3,7 +3,7 @@
 */
 `default_nettype none
 `timescale 100fs/100fs
-module snn16to8to4Flat
+module snn32to16to8Flat
     ( // Inputs
       input wire  clk // clock
     , input wire  rst // reset
@@ -24,70 +24,96 @@ module snn16to8to4Flat
     , input wire  eta_13
     , input wire  eta_14
     , input wire  eta_15
+    , input wire  eta_16
+    , input wire  eta_17
+    , input wire  eta_18
+    , input wire  eta_19
+    , input wire  eta_20
+    , input wire  eta_21
+    , input wire  eta_22
+    , input wire  eta_23
+    , input wire  eta_24
+    , input wire  eta_25
+    , input wire  eta_26
+    , input wire  eta_27
+    , input wire  eta_28
+    , input wire  eta_29
+    , input wire  eta_30
+    , input wire  eta_31
 
       // Outputs
     , output wire  c$ds_app_arg_0
     , output wire  c$ds_app_arg_1
     , output wire  c$ds_app_arg_2
     , output wire  c$ds_app_arg_3
+    , output wire  c$ds_app_arg_4
+    , output wire  c$ds_app_arg_5
+    , output wire  c$ds_app_arg_6
+    , output wire  c$ds_app_arg_7
     );
-  // /Users/jake/EMPIRE/projects/ongoing/2026_039/CategoricalSNN.hs/synthesis/TopEntities.hs:253:1-15
-  wire [255:0] c$results1_app_arg;
-  wire [127:0] result;
-  // /Users/jake/EMPIRE/projects/ongoing/2026_039/CategoricalSNN.hs/synthesis/TopEntities.hs:253:1-15
-  wire [255:0] c$ds_app_arg_8;
-  // /Users/jake/EMPIRE/projects/ongoing/2026_039/CategoricalSNN.hs/synthesis/TopEntities.hs:253:1-15
-  wire [127:0] c$ds_app_arg_9;
-  // /Users/jake/EMPIRE/projects/ongoing/2026_039/CategoricalSNN.hs/synthesis/TopEntities.hs:253:1-15
-  wire [255:0] s1;
-  // /Users/jake/EMPIRE/projects/ongoing/2026_039/CategoricalSNN.hs/synthesis/TopEntities.hs:253:1-15
-  wire [127:0] s2;
-  // /Users/jake/EMPIRE/projects/ongoing/2026_039/CategoricalSNN.hs/synthesis/TopEntities.hs:253:1-15
-  reg [383:0] ds = {{32'sd0,   32'sd0,   32'sd0,   32'sd0,   32'sd0,   32'sd0,   32'sd0,
-  32'sd0},   {32'sd0,   32'sd0,   32'sd0,   32'sd0}};
-  // /Users/jake/EMPIRE/projects/ongoing/2026_039/CategoricalSNN.hs/synthesis/TopEntities.hs:253:1-15
-  wire [7:0] midSpikes;
-  // /Users/jake/EMPIRE/projects/ongoing/2026_039/CategoricalSNN.hs/synthesis/TopEntities.hs:253:1-15
-  wire [263:0] results1;
-  // /Users/jake/EMPIRE/projects/ongoing/2026_039/CategoricalSNN.hs/synthesis/TopEntities.hs:253:1-15
-  wire [131:0] results2;
-  wire [15:0] eta;
-  wire [4095:0] c$vec;
-  wire [1023:0] c$vec_0;
-  wire [3:0] c$ds_app_arg;
+  // /Users/jake/EMPIRE/projects/ongoing/2026_039/CategoricalSNN.hs/synthesis/TopEntities.hs:316:1-16
+  wire [511:0] c$results1_app_arg;
+  wire [255:0] result;
+  // /Users/jake/EMPIRE/projects/ongoing/2026_039/CategoricalSNN.hs/synthesis/TopEntities.hs:316:1-16
+  wire [511:0] c$ds_app_arg_16;
+  // /Users/jake/EMPIRE/projects/ongoing/2026_039/CategoricalSNN.hs/synthesis/TopEntities.hs:316:1-16
+  wire [255:0] c$ds_app_arg_17;
+  // /Users/jake/EMPIRE/projects/ongoing/2026_039/CategoricalSNN.hs/synthesis/TopEntities.hs:316:1-16
+  wire [511:0] s1;
+  // /Users/jake/EMPIRE/projects/ongoing/2026_039/CategoricalSNN.hs/synthesis/TopEntities.hs:316:1-16
+  wire [255:0] s2;
+  // /Users/jake/EMPIRE/projects/ongoing/2026_039/CategoricalSNN.hs/synthesis/TopEntities.hs:316:1-16
+  reg [767:0] ds = {{32'sd0,   32'sd0,   32'sd0,   32'sd0,   32'sd0,   32'sd0,   32'sd0,   32'sd0,
+  32'sd0,   32'sd0,   32'sd0,   32'sd0,   32'sd0,   32'sd0,   32'sd0,
+  32'sd0},   {32'sd0,   32'sd0,   32'sd0,   32'sd0,   32'sd0,   32'sd0,
+              32'sd0,   32'sd0}};
+  // /Users/jake/EMPIRE/projects/ongoing/2026_039/CategoricalSNN.hs/synthesis/TopEntities.hs:316:1-16
+  wire [15:0] midSpikes;
+  // /Users/jake/EMPIRE/projects/ongoing/2026_039/CategoricalSNN.hs/synthesis/TopEntities.hs:316:1-16
+  wire [527:0] results1;
+  // /Users/jake/EMPIRE/projects/ongoing/2026_039/CategoricalSNN.hs/synthesis/TopEntities.hs:316:1-16
+  wire [263:0] results2;
+  wire [31:0] eta;
+  wire [16383:0] c$vec;
+  wire [4095:0] c$vec_0;
+  wire [7:0] c$ds_app_arg;
 
   assign eta = {eta_0,   eta_1,   eta_2,
                 eta_3,   eta_4,   eta_5,   eta_6,   eta_7,
                 eta_8,   eta_9,   eta_10,   eta_11,   eta_12,
-                eta_13,   eta_14,   eta_15};
+                eta_13,   eta_14,   eta_15,   eta_16,
+                eta_17,   eta_18,   eta_19,   eta_20,
+                eta_21,   eta_22,   eta_23,   eta_24,
+                eta_25,   eta_26,   eta_27,   eta_28,
+                eta_29,   eta_30,   eta_31};
 
-  assign c$vec = ({8 {({16 {32'sd8192}})}});
+  assign c$vec = ({16 {({32 {32'sd4096}})}});
 
   // map begin
   genvar i_1;
   generate
-  for (i_1=0; i_1 < 8; i_1 = i_1 + 1) begin : map
-    wire [511:0] map_in;
-    assign map_in = c$vec[i_1*512+:512];
+  for (i_1=0; i_1 < 16; i_1 = i_1 + 1) begin : map
+    wire [1023:0] map_in;
+    assign map_in = c$vec[i_1*1024+:1024];
     wire signed [31:0] map_out;
-    // /Users/jake/EMPIRE/projects/ongoing/2026_039/CategoricalSNN.hs/synthesis/TopEntities.hs:253:1-15
-    wire [543:0] ws1;
-    // /Users/jake/EMPIRE/projects/ongoing/2026_039/CategoricalSNN.hs/synthesis/TopEntities.hs:253:1-15
-    wire [511:0] ws2;
+    // /Users/jake/EMPIRE/projects/ongoing/2026_039/CategoricalSNN.hs/synthesis/TopEntities.hs:316:1-16
+    wire [1055:0] ws1;
+    // /Users/jake/EMPIRE/projects/ongoing/2026_039/CategoricalSNN.hs/synthesis/TopEntities.hs:316:1-16
+    wire [1023:0] ws2;
     wire signed [31:0] result_0;
-    // /Users/jake/EMPIRE/projects/ongoing/2026_039/CategoricalSNN.hs/synthesis/TopEntities.hs:253:1-15
-    wire [511:0] c$ws2_app_arg;
-    wire [511:0] c$vec2;
+    // /Users/jake/EMPIRE/projects/ongoing/2026_039/CategoricalSNN.hs/synthesis/TopEntities.hs:316:1-16
+    wire [1023:0] c$ws2_app_arg;
+    wire [1023:0] c$vec2;
     assign map_out = result_0;
 
     assign ws1 = {32'sd0,   ws2};
 
-    assign c$vec2 = (ws1[544-1 : 32]);
+    assign c$vec2 = (ws1[1056-1 : 32]);
 
     // zipWith start
     genvar i;
 
-    for (i = 0; i < 16; i = i + 1) begin : zipWith
+    for (i = 0; i < 32; i = i + 1) begin : zipWith
       wire signed [31:0] zipWith_in1;
       assign zipWith_in1 = c$ws2_app_arg[i*32+:32];
       wire signed [31:0] zipWith_in2;
@@ -133,7 +159,7 @@ module snn16to8to4Flat
     // zipWith start
     genvar i_0;
 
-    for (i_0 = 0; i_0 < 16; i_0 = i_0 + 1) begin : zipWith_0
+    for (i_0 = 0; i_0 < 32; i_0 = i_0 + 1) begin : zipWith_0
       wire signed [31:0] zipWith_in1_0;
       assign zipWith_in1_0 = map_in[i_0*32+:32];
       wire  zipWith_in2_0;
@@ -156,43 +182,33 @@ module snn16to8to4Flat
   endgenerate
   // map end
 
-  assign c$vec_0 = {{32'sd32768,   32'sd19660,
-                     -32'sd13107,   32'sd26214,   32'sd6553,
-                     -32'sd19660,   32'sd13107,   32'sd39321},
-                    {32'sd6553,   32'sd39321,   32'sd13107,
-                     -32'sd6553,   32'sd26214,   32'sd13107,
-                     -32'sd32768,   32'sd19660},   {-32'sd19660,
-                                                    32'sd13107,   32'sd32768,   32'sd19660,
-                                                    -32'sd6553,   32'sd26214,   32'sd19660,
-                                                    -32'sd13107},   {32'sd26214,   -32'sd13107,
-                                                                     32'sd39321,   32'sd6553,   32'sd19660,
-                                                                     -32'sd26214,   32'sd32768,   32'sd13107}};
+  assign c$vec_0 = ({8 {({16 {32'sd8192}})}});
 
   // map begin
   genvar i_4;
   generate
-  for (i_4=0; i_4 < 4; i_4 = i_4 + 1) begin : map_0
-    wire [255:0] map_in_0;
-    assign map_in_0 = c$vec_0[i_4*256+:256];
+  for (i_4=0; i_4 < 8; i_4 = i_4 + 1) begin : map_0
+    wire [511:0] map_in_0;
+    assign map_in_0 = c$vec_0[i_4*512+:512];
     wire signed [31:0] map_out_0;
-    // /Users/jake/EMPIRE/projects/ongoing/2026_039/CategoricalSNN.hs/synthesis/TopEntities.hs:253:1-15
-    wire [287:0] ws1_1;
-    // /Users/jake/EMPIRE/projects/ongoing/2026_039/CategoricalSNN.hs/synthesis/TopEntities.hs:253:1-15
-    wire [255:0] ws2_0;
+    // /Users/jake/EMPIRE/projects/ongoing/2026_039/CategoricalSNN.hs/synthesis/TopEntities.hs:316:1-16
+    wire [543:0] ws1_1;
+    // /Users/jake/EMPIRE/projects/ongoing/2026_039/CategoricalSNN.hs/synthesis/TopEntities.hs:316:1-16
+    wire [511:0] ws2_0;
     wire signed [31:0] result_3;
-    // /Users/jake/EMPIRE/projects/ongoing/2026_039/CategoricalSNN.hs/synthesis/TopEntities.hs:253:1-15
-    wire [255:0] c$ws2_app_arg_0;
-    wire [255:0] c$vec2_0;
+    // /Users/jake/EMPIRE/projects/ongoing/2026_039/CategoricalSNN.hs/synthesis/TopEntities.hs:316:1-16
+    wire [511:0] c$ws2_app_arg_0;
+    wire [511:0] c$vec2_0;
     assign map_out_0 = result_3;
 
     assign ws1_1 = {32'sd0,   ws2_0};
 
-    assign c$vec2_0 = (ws1_1[288-1 : 32]);
+    assign c$vec2_0 = (ws1_1[544-1 : 32]);
 
     // zipWith start
     genvar i_2;
 
-    for (i_2 = 0; i_2 < 8; i_2 = i_2 + 1) begin : zipWith_1
+    for (i_2 = 0; i_2 < 16; i_2 = i_2 + 1) begin : zipWith_1
       wire signed [31:0] zipWith_in1_1;
       assign zipWith_in1_1 = c$ws2_app_arg_0[i_2*32+:32];
       wire signed [31:0] zipWith_in2_1;
@@ -238,7 +254,7 @@ module snn16to8to4Flat
     // zipWith start
     genvar i_3;
 
-    for (i_3 = 0; i_3 < 8; i_3 = i_3 + 1) begin : zipWith_2
+    for (i_3 = 0; i_3 < 16; i_3 = i_3 + 1) begin : zipWith_2
       wire signed [31:0] zipWith_in1_2;
       assign zipWith_in1_2 = map_in_0[i_3*32+:32];
       wire  zipWith_in2_2;
@@ -264,14 +280,14 @@ module snn16to8to4Flat
   // map begin
   genvar i_5;
   generate
-  for (i_5=0; i_5 < 8; i_5 = i_5 + 1) begin : map_1
+  for (i_5=0; i_5 < 16; i_5 = i_5 + 1) begin : map_1
     wire [32:0] map_in_1;
     assign map_in_1 = results1[i_5*33+:33];
     wire signed [31:0] map_out_1;
     assign map_out_1 = $signed(map_in_1[32:1]);
 
 
-    assign c$ds_app_arg_8[i_5*32+:32] = map_out_1;
+    assign c$ds_app_arg_16[i_5*32+:32] = map_out_1;
   end
   endgenerate
   // map end
@@ -279,14 +295,14 @@ module snn16to8to4Flat
   // map begin
   genvar i_6;
   generate
-  for (i_6=0; i_6 < 4; i_6 = i_6 + 1) begin : map_2
+  for (i_6=0; i_6 < 8; i_6 = i_6 + 1) begin : map_2
     wire [32:0] map_in_2;
     assign map_in_2 = results2[i_6*33+:33];
     wire signed [31:0] map_out_2;
     assign map_out_2 = $signed(map_in_2[32:1]);
 
 
-    assign c$ds_app_arg_9[i_6*32+:32] = map_out_2;
+    assign c$ds_app_arg_17[i_6*32+:32] = map_out_2;
   end
   endgenerate
   // map end
@@ -294,7 +310,7 @@ module snn16to8to4Flat
   // map begin
   genvar i_7;
   generate
-  for (i_7=0; i_7 < 4; i_7 = i_7 + 1) begin : map_3
+  for (i_7=0; i_7 < 8; i_7 = i_7 + 1) begin : map_3
     wire [32:0] map_in_3;
     assign map_in_3 = results2[i_7*33+:33];
     wire  map_out_3;
@@ -306,17 +322,19 @@ module snn16to8to4Flat
   endgenerate
   // map end
 
-  assign s1 = ds[383:128];
+  assign s1 = ds[767:256];
 
-  assign s2 = ds[127:0];
+  assign s2 = ds[255:0];
 
   // register begin
   always @(posedge clk or  posedge  rst) begin : ds_register
     if ( rst) begin
-      ds <= {{32'sd0,   32'sd0,   32'sd0,   32'sd0,   32'sd0,   32'sd0,   32'sd0,
-    32'sd0},   {32'sd0,   32'sd0,   32'sd0,   32'sd0}};
+      ds <= {{32'sd0,   32'sd0,   32'sd0,   32'sd0,   32'sd0,   32'sd0,   32'sd0,   32'sd0,
+    32'sd0,   32'sd0,   32'sd0,   32'sd0,   32'sd0,   32'sd0,   32'sd0,
+    32'sd0},   {32'sd0,   32'sd0,   32'sd0,   32'sd0,   32'sd0,   32'sd0,
+                32'sd0,   32'sd0}};
     end else if (en) begin
-      ds <= {c$ds_app_arg_8,   c$ds_app_arg_9};
+      ds <= {c$ds_app_arg_16,   c$ds_app_arg_17};
     end
   end
   // register end
@@ -324,7 +342,7 @@ module snn16to8to4Flat
   // map begin
   genvar i_8;
   generate
-  for (i_8=0; i_8 < 8; i_8 = i_8 + 1) begin : map_4
+  for (i_8=0; i_8 < 16; i_8 = i_8 + 1) begin : map_4
     wire [32:0] map_in_4;
     assign map_in_4 = results1[i_8*33+:33];
     wire  map_out_4;
@@ -339,7 +357,7 @@ module snn16to8to4Flat
   // zipWith start
   genvar i_9;
   generate
-  for (i_9 = 0; i_9 < 8; i_9 = i_9 + 1) begin : zipWith_3
+  for (i_9 = 0; i_9 < 16; i_9 = i_9 + 1) begin : zipWith_3
     wire signed [31:0] zipWith_in1_3;
     assign zipWith_in1_3 = s1[i_9*32+:32];
     wire signed [31:0] zipWith_in2_3;
@@ -350,7 +368,7 @@ module snn16to8to4Flat
     wire [31:0] \r'_2 ;
     wire [32:0] \c$r'_app_arg_1 ;
     wire signed [32:0] r_1;
-    // /Users/jake/EMPIRE/projects/ongoing/2026_039/CategoricalSNN.hs/synthesis/TopEntities.hs:253:1-15
+    // /Users/jake/EMPIRE/projects/ongoing/2026_039/CategoricalSNN.hs/synthesis/TopEntities.hs:316:1-16
     wire  fired;
     wire [32:0] result_6;
     wire signed [31:0] c$app_arg;
@@ -423,7 +441,7 @@ module snn16to8to4Flat
   // zipWith start
   genvar i_10;
   generate
-  for (i_10 = 0; i_10 < 4; i_10 = i_10 + 1) begin : zipWith_4
+  for (i_10 = 0; i_10 < 8; i_10 = i_10 + 1) begin : zipWith_4
     wire signed [31:0] zipWith_in1_4;
     assign zipWith_in1_4 = s2[i_10*32+:32];
     wire signed [31:0] zipWith_in2_4;
@@ -434,7 +452,7 @@ module snn16to8to4Flat
     wire [31:0] \r'_3 ;
     wire [32:0] \c$r'_app_arg_2 ;
     wire signed [32:0] r_2;
-    // /Users/jake/EMPIRE/projects/ongoing/2026_039/CategoricalSNN.hs/synthesis/TopEntities.hs:253:1-15
+    // /Users/jake/EMPIRE/projects/ongoing/2026_039/CategoricalSNN.hs/synthesis/TopEntities.hs:316:1-16
     wire  fired_0;
     wire [32:0] result_9;
     wire signed [31:0] c$app_arg_5;
@@ -504,13 +522,21 @@ module snn16to8to4Flat
   endgenerate
   // zipWith end
 
-  assign c$ds_app_arg_0 = c$ds_app_arg[3:3];
+  assign c$ds_app_arg_0 = c$ds_app_arg[7:7];
 
-  assign c$ds_app_arg_1 = c$ds_app_arg[2:2];
+  assign c$ds_app_arg_1 = c$ds_app_arg[6:6];
 
-  assign c$ds_app_arg_2 = c$ds_app_arg[1:1];
+  assign c$ds_app_arg_2 = c$ds_app_arg[5:5];
 
-  assign c$ds_app_arg_3 = c$ds_app_arg[0:0];
+  assign c$ds_app_arg_3 = c$ds_app_arg[4:4];
+
+  assign c$ds_app_arg_4 = c$ds_app_arg[3:3];
+
+  assign c$ds_app_arg_5 = c$ds_app_arg[2:2];
+
+  assign c$ds_app_arg_6 = c$ds_app_arg[1:1];
+
+  assign c$ds_app_arg_7 = c$ds_app_arg[0:0];
 
 
 endmodule

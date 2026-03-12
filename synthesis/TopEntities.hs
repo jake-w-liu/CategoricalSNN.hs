@@ -8,6 +8,18 @@ import Clash.Annotations.TopEntity (PortName(..), TopEntity(..))
 import Clash.Prelude
 
 import CategoricalSNN
+  ( LIFParams
+  , NeuronState
+  , SNNMorphism(..)
+  , Spike
+  , Weight
+  , defaultLIFParams
+  , flatLayer
+  , flatNetwork2Layer
+  , lifStep
+  , snnLayer
+  , snnNetwork2Layer
+  )
 
 main :: IO ()
 main = pure ()
@@ -38,6 +50,9 @@ weights8to4 =
 
 weights16to8 :: Vec 8 (Vec 16 Weight)
 weights16to8 = repeat (repeat 0.125)
+
+weights32to16 :: Vec 16 (Vec 32 Weight)
+weights32to16 = repeat (repeat 0.0625)
 
 {-# ANN snn4to3
   (Synthesize
@@ -255,4 +270,67 @@ snn16to8to4Flat clk rst en =
     in  ((map fst results1, map fst results2), map snd results2)
 
   initState :: (Vec 8 NeuronState, Vec 4 NeuronState)
+  initState = (repeat 0, repeat 0)
+
+{-# ANN snn32to16to8
+  (Synthesize
+    { t_name = "snn_32to16to8"
+    , t_inputs =
+        [ PortName "clk"
+        , PortName "rst"
+        , PortName "en"
+        , PortName "spike_in"
+        ]
+    , t_output = PortName "spike_out"
+    }) #-}
+{-# NOINLINE snn32to16to8 #-}
+snn32to16to8
+  :: Clock System
+  -> Reset System
+  -> Enable System
+  -> Signal System (Vec 32 Spike)
+  -> Signal System (Vec 8 Spike)
+snn32to16to8 clk rst en =
+  case snnNetwork2Layer weights32to16 weights16to8 benchmarkLIFParams of
+    SNNMorphism transition initState ->
+      exposeClockResetEnable (mealy transition initState) clk rst en
+
+{-# ANN snn32to16to8Flat
+  (Synthesize
+    { t_name = "snn_32to16to8_flat"
+    , t_inputs =
+        [ PortName "clk"
+        , PortName "rst"
+        , PortName "en"
+        , PortName "spike_in"
+        ]
+    , t_output = PortName "spike_out"
+    }) #-}
+{-# NOINLINE snn32to16to8Flat #-}
+snn32to16to8Flat
+  :: Clock System
+  -> Reset System
+  -> Enable System
+  -> Signal System (Vec 32 Spike)
+  -> Signal System (Vec 8 Spike)
+snn32to16to8Flat clk rst en =
+  exposeClockResetEnable (mealy transition initState) clk rst en
+ where
+  transition
+    :: (Vec 16 NeuronState, Vec 8 NeuronState)
+    -> Vec 32 Spike
+    -> ((Vec 16 NeuronState, Vec 8 NeuronState), Vec 8 Spike)
+  transition (s1, s2) spikes =
+    let currents1 = map
+          (\wRow -> foldl (+) 0 (zipWith (\w s -> if s then w else 0) wRow spikes))
+          weights32to16
+        results1 = zipWith (lifStep benchmarkLIFParams) s1 currents1
+        midSpikes = map snd results1
+        currents2 = map
+          (\wRow -> foldl (+) 0 (zipWith (\w s -> if s then w else 0) wRow midSpikes))
+          weights16to8
+        results2 = zipWith (lifStep benchmarkLIFParams) s2 currents2
+    in  ((map fst results1, map fst results2), map snd results2)
+
+  initState :: (Vec 16 NeuronState, Vec 8 NeuronState)
   initState = (repeat 0, repeat 0)

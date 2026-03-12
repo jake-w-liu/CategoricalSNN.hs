@@ -3,7 +3,7 @@
 */
 `default_nettype none
 `timescale 100fs/100fs
-module snn16to8to4
+module snn32to16to8
     ( // Inputs
       input wire  clk // clock
     , input wire  rst // reset
@@ -24,67 +24,93 @@ module snn16to8to4
     , input wire  eta_13
     , input wire  eta_14
     , input wire  eta_15
+    , input wire  eta_16
+    , input wire  eta_17
+    , input wire  eta_18
+    , input wire  eta_19
+    , input wire  eta_20
+    , input wire  eta_21
+    , input wire  eta_22
+    , input wire  eta_23
+    , input wire  eta_24
+    , input wire  eta_25
+    , input wire  eta_26
+    , input wire  eta_27
+    , input wire  eta_28
+    , input wire  eta_29
+    , input wire  eta_30
+    , input wire  eta_31
 
       // Outputs
     , output wire  result_0
     , output wire  result_1
     , output wire  result_2
     , output wire  result_3
+    , output wire  result_4
+    , output wire  result_5
+    , output wire  result_6
+    , output wire  result_7
     );
-  wire [255:0] c$results_app_arg;
-  wire [255:0] c$ds1_app_arg;
-  wire [7:0] c$ds1_app_arg_0;
-  wire [127:0] c$results_app_arg_0;
-  wire [127:0] c$ds2_app_arg;
-  wire [3:0] c$ds2_app_arg_0;
-  reg [383:0] ds = {{32'sd0,   32'sd0,   32'sd0,   32'sd0,   32'sd0,   32'sd0,   32'sd0,
-  32'sd0},   {32'sd0,   32'sd0,   32'sd0,   32'sd0}};
-  wire [255:0] sf;
-  wire [127:0] sg;
+  wire [511:0] c$results_app_arg;
+  wire [511:0] c$ds1_app_arg;
+  wire [15:0] c$ds1_app_arg_0;
+  wire [255:0] c$results_app_arg_0;
+  wire [255:0] c$ds2_app_arg;
+  wire [7:0] c$ds2_app_arg_0;
+  reg [767:0] ds = {{32'sd0,   32'sd0,   32'sd0,   32'sd0,   32'sd0,   32'sd0,   32'sd0,   32'sd0,
+  32'sd0,   32'sd0,   32'sd0,   32'sd0,   32'sd0,   32'sd0,   32'sd0,
+  32'sd0},   {32'sd0,   32'sd0,   32'sd0,   32'sd0,   32'sd0,   32'sd0,
+              32'sd0,   32'sd0}};
+  wire [511:0] sf;
+  wire [255:0] sg;
   wire [263:0] results;
-  wire [131:0] results_0;
-  wire [15:0] eta;
-  wire [4095:0] c$vec;
-  wire [1023:0] c$vec_0;
-  wire [387:0] ds_1;
-  wire [387:0] result_projection;
-  wire [3:0] result;
+  wire [527:0] results_0;
+  wire [31:0] eta;
+  wire [16383:0] c$vec;
+  wire [4095:0] c$vec_0;
+  wire [775:0] ds_1;
+  wire [775:0] result_projection;
+  wire [7:0] result;
 
   assign eta = {eta_0,   eta_1,   eta_2,
                 eta_3,   eta_4,   eta_5,   eta_6,   eta_7,
                 eta_8,   eta_9,   eta_10,   eta_11,   eta_12,
-                eta_13,   eta_14,   eta_15};
+                eta_13,   eta_14,   eta_15,   eta_16,
+                eta_17,   eta_18,   eta_19,   eta_20,
+                eta_21,   eta_22,   eta_23,   eta_24,
+                eta_25,   eta_26,   eta_27,   eta_28,
+                eta_29,   eta_30,   eta_31};
 
-  assign c$vec = ({8 {({16 {32'sd8192}})}});
+  assign c$vec = ({16 {({32 {32'sd4096}})}});
 
   // map begin
   genvar i_1;
   generate
-  for (i_1=0; i_1 < 8; i_1 = i_1 + 1) begin : map
-    wire [511:0] map_in;
-    assign map_in = c$vec[i_1*512+:512];
+  for (i_1=0; i_1 < 16; i_1 = i_1 + 1) begin : map
+    wire [1023:0] map_in;
+    assign map_in = c$vec[i_1*1024+:1024];
     wire signed [31:0] map_out;
-    wire [543:0] ws;
-    wire [511:0] ws1;
-    wire signed [31:0] result_8;
-    wire [511:0] c$ws1_app_arg;
-    wire [511:0] c$vec2;
-    assign map_out = result_8;
+    wire [1055:0] ws;
+    wire [1023:0] ws1;
+    wire signed [31:0] result_16;
+    wire [1023:0] c$ws1_app_arg;
+    wire [1023:0] c$vec2;
+    assign map_out = result_16;
 
     assign ws = {32'sd0,   ws1};
 
-    assign c$vec2 = (ws[544-1 : 32]);
+    assign c$vec2 = (ws[1056-1 : 32]);
 
     // zipWith start
     genvar i;
 
-    for (i = 0; i < 16; i = i + 1) begin : zipWith
+    for (i = 0; i < 32; i = i + 1) begin : zipWith
       wire signed [31:0] zipWith_in1;
       assign zipWith_in1 = c$ws1_app_arg[i*32+:32];
       wire signed [31:0] zipWith_in2;
       assign zipWith_in2 = c$vec2[i*32+:32];
       wire signed [31:0] c$n;
-      wire signed [31:0] result_9;
+      wire signed [31:0] result_17;
     wire signed [31:0] c$case_alt;
     wire [31:0] \r' ;
     wire [32:0] \c$r'_app_arg ;
@@ -93,11 +119,11 @@ module snn16to8to4
     wire [31:0] c$bv_0;
     wire [31:0] c$bv_1;
     wire [32:0] \r'_projection ;
-    assign c$n = result_9;
+    assign c$n = result_17;
 
     assign c$bv = (\r' );
 
-    assign result_9 = ((( \c$r'_app_arg [33-1] ) ^ ( c$bv[32-1] )) == 1'b0) ? ($signed(\r' )) : c$case_alt;
+    assign result_17 = ((( \c$r'_app_arg [33-1] ) ^ ( c$bv[32-1] )) == 1'b0) ? ($signed(\r' )) : c$case_alt;
 
     assign c$bv_0 = (($unsigned(zipWith_in2)));
 
@@ -119,21 +145,21 @@ module snn16to8to4
 
     // zipWith end
 
-    assign result_8 = $signed(ws[32-1:0]);
+    assign result_16 = $signed(ws[32-1:0]);
 
     // zipWith start
     genvar i_0;
 
-    for (i_0 = 0; i_0 < 16; i_0 = i_0 + 1) begin : zipWith_0
+    for (i_0 = 0; i_0 < 32; i_0 = i_0 + 1) begin : zipWith_0
       wire signed [31:0] zipWith_in1_0;
       assign zipWith_in1_0 = map_in[i_0*32+:32];
       wire  zipWith_in2_0;
       assign zipWith_in2_0 = eta[i_0*1+:1];
       wire signed [31:0] c$n_0;
-      wire signed [31:0] result_10;
-    assign c$n_0 = result_10;
+      wire signed [31:0] result_18;
+    assign c$n_0 = result_18;
 
-    assign result_10 = zipWith_in2_0 ? zipWith_in1_0 : 32'sd0;
+    assign result_18 = zipWith_in2_0 ? zipWith_in1_0 : 32'sd0;
 
 
       assign c$ws1_app_arg[i_0*32+:32] = c$n_0;
@@ -150,9 +176,9 @@ module snn16to8to4
   // map begin
   genvar i_2;
   generate
-  for (i_2=0; i_2 < 8; i_2 = i_2 + 1) begin : map_0
+  for (i_2=0; i_2 < 16; i_2 = i_2 + 1) begin : map_0
     wire [32:0] map_in_0;
-    assign map_in_0 = results[i_2*33+:33];
+    assign map_in_0 = results_0[i_2*33+:33];
     wire signed [31:0] map_out_0;
     assign map_out_0 = $signed(map_in_0[32:1]);
 
@@ -165,9 +191,9 @@ module snn16to8to4
   // map begin
   genvar i_3;
   generate
-  for (i_3=0; i_3 < 8; i_3 = i_3 + 1) begin : map_1
+  for (i_3=0; i_3 < 16; i_3 = i_3 + 1) begin : map_1
     wire [32:0] map_in_1;
-    assign map_in_1 = results[i_3*33+:33];
+    assign map_in_1 = results_0[i_3*33+:33];
     wire  map_out_1;
     assign map_out_1 = map_in_1[0:0];
 
@@ -177,45 +203,35 @@ module snn16to8to4
   endgenerate
   // map end
 
-  assign c$vec_0 = {{32'sd32768,   32'sd19660,
-                     -32'sd13107,   32'sd26214,   32'sd6553,
-                     -32'sd19660,   32'sd13107,   32'sd39321},
-                    {32'sd6553,   32'sd39321,   32'sd13107,
-                     -32'sd6553,   32'sd26214,   32'sd13107,
-                     -32'sd32768,   32'sd19660},   {-32'sd19660,
-                                                    32'sd13107,   32'sd32768,   32'sd19660,
-                                                    -32'sd6553,   32'sd26214,   32'sd19660,
-                                                    -32'sd13107},   {32'sd26214,   -32'sd13107,
-                                                                     32'sd39321,   32'sd6553,   32'sd19660,
-                                                                     -32'sd26214,   32'sd32768,   32'sd13107}};
+  assign c$vec_0 = ({8 {({16 {32'sd8192}})}});
 
   // map begin
   genvar i_6;
   generate
-  for (i_6=0; i_6 < 4; i_6 = i_6 + 1) begin : map_2
-    wire [255:0] map_in_2;
-    assign map_in_2 = c$vec_0[i_6*256+:256];
+  for (i_6=0; i_6 < 8; i_6 = i_6 + 1) begin : map_2
+    wire [511:0] map_in_2;
+    assign map_in_2 = c$vec_0[i_6*512+:512];
     wire signed [31:0] map_out_2;
-    wire [255:0] c$ws1_app_arg_0;
-    wire signed [31:0] result_11;
-    wire [287:0] ws_1;
-    wire [255:0] ws1_0;
-    wire [255:0] c$vec2_0;
-    assign map_out_2 = result_11;
+    wire [511:0] c$ws1_app_arg_0;
+    wire signed [31:0] result_19;
+    wire [543:0] ws_1;
+    wire [511:0] ws1_0;
+    wire [511:0] c$vec2_0;
+    assign map_out_2 = result_19;
 
     // zipWith start
     genvar i_4;
 
-    for (i_4 = 0; i_4 < 8; i_4 = i_4 + 1) begin : zipWith_1
+    for (i_4 = 0; i_4 < 16; i_4 = i_4 + 1) begin : zipWith_1
       wire signed [31:0] zipWith_in1_1;
       assign zipWith_in1_1 = map_in_2[i_4*32+:32];
       wire  zipWith_in2_1;
       assign zipWith_in2_1 = c$ds1_app_arg_0[i_4*1+:1];
       wire signed [31:0] c$n_1;
-      wire signed [31:0] result_12;
-    assign c$n_1 = result_12;
+      wire signed [31:0] result_20;
+    assign c$n_1 = result_20;
 
-    assign result_12 = zipWith_in2_1 ? zipWith_in1_1 : 32'sd0;
+    assign result_20 = zipWith_in2_1 ? zipWith_in1_1 : 32'sd0;
 
 
       assign c$ws1_app_arg_0[i_4*32+:32] = c$n_1;
@@ -223,22 +239,22 @@ module snn16to8to4
 
     // zipWith end
 
-    assign result_11 = $signed(ws_1[32-1:0]);
+    assign result_19 = $signed(ws_1[32-1:0]);
 
     assign ws_1 = {32'sd0,   ws1_0};
 
-    assign c$vec2_0 = (ws_1[288-1 : 32]);
+    assign c$vec2_0 = (ws_1[544-1 : 32]);
 
     // zipWith start
     genvar i_5;
 
-    for (i_5 = 0; i_5 < 8; i_5 = i_5 + 1) begin : zipWith_2
+    for (i_5 = 0; i_5 < 16; i_5 = i_5 + 1) begin : zipWith_2
       wire signed [31:0] zipWith_in1_2;
       assign zipWith_in1_2 = c$ws1_app_arg_0[i_5*32+:32];
       wire signed [31:0] zipWith_in2_2;
       assign zipWith_in2_2 = c$vec2_0[i_5*32+:32];
       wire signed [31:0] c$n_2;
-      wire signed [31:0] result_13;
+      wire signed [31:0] result_21;
     wire signed [31:0] c$case_alt_3;
     wire [31:0] \r'_1 ;
     wire [32:0] \c$r'_app_arg_0 ;
@@ -247,11 +263,11 @@ module snn16to8to4
     wire [31:0] c$bv_3;
     wire [31:0] c$bv_4;
     wire [32:0] \r'_projection_0 ;
-    assign c$n_2 = result_13;
+    assign c$n_2 = result_21;
 
     assign c$bv_2 = (\r'_1 );
 
-    assign result_13 = ((( \c$r'_app_arg_0 [33-1] ) ^ ( c$bv_2[32-1] )) == 1'b0) ? ($signed(\r'_1 )) : c$case_alt_3;
+    assign result_21 = ((( \c$r'_app_arg_0 [33-1] ) ^ ( c$bv_2[32-1] )) == 1'b0) ? ($signed(\r'_1 )) : c$case_alt_3;
 
     assign c$bv_3 = (($unsigned(zipWith_in2_2)));
 
@@ -282,9 +298,9 @@ module snn16to8to4
   // map begin
   genvar i_7;
   generate
-  for (i_7=0; i_7 < 4; i_7 = i_7 + 1) begin : map_3
+  for (i_7=0; i_7 < 8; i_7 = i_7 + 1) begin : map_3
     wire [32:0] map_in_3;
-    assign map_in_3 = results_0[i_7*33+:33];
+    assign map_in_3 = results[i_7*33+:33];
     wire signed [31:0] map_out_3;
     assign map_out_3 = $signed(map_in_3[32:1]);
 
@@ -297,9 +313,9 @@ module snn16to8to4
   // map begin
   genvar i_8;
   generate
-  for (i_8=0; i_8 < 4; i_8 = i_8 + 1) begin : map_4
+  for (i_8=0; i_8 < 8; i_8 = i_8 + 1) begin : map_4
     wire [32:0] map_in_4;
-    assign map_in_4 = results_0[i_8*33+:33];
+    assign map_in_4 = results[i_8*33+:33];
     wire  map_out_4;
     assign map_out_4 = map_in_4[0:0];
 
@@ -315,35 +331,37 @@ module snn16to8to4
   // register begin
   always @(posedge clk or  posedge  rst) begin : ds_register
     if ( rst) begin
-      ds <= {{32'sd0,   32'sd0,   32'sd0,   32'sd0,   32'sd0,   32'sd0,   32'sd0,
-    32'sd0},   {32'sd0,   32'sd0,   32'sd0,   32'sd0}};
+      ds <= {{32'sd0,   32'sd0,   32'sd0,   32'sd0,   32'sd0,   32'sd0,   32'sd0,   32'sd0,
+    32'sd0,   32'sd0,   32'sd0,   32'sd0,   32'sd0,   32'sd0,   32'sd0,
+    32'sd0},   {32'sd0,   32'sd0,   32'sd0,   32'sd0,   32'sd0,   32'sd0,
+                32'sd0,   32'sd0}};
     end else if (en) begin
-      ds <= ds_1[387:4];
+      ds <= ds_1[775:8];
     end
   end
   // register end
 
-  assign sf = ds[383:128];
+  assign sf = ds[767:256];
 
-  assign sg = ds[127:0];
+  assign sg = ds[255:0];
 
   // zipWith start
   genvar i_9;
   generate
   for (i_9 = 0; i_9 < 8; i_9 = i_9 + 1) begin : zipWith_3
     wire signed [31:0] zipWith_in1_3;
-    assign zipWith_in1_3 = sf[i_9*32+:32];
+    assign zipWith_in1_3 = sg[i_9*32+:32];
     wire signed [31:0] zipWith_in2_3;
-    assign zipWith_in2_3 = c$results_app_arg[i_9*32+:32];
+    assign zipWith_in2_3 = c$results_app_arg_0[i_9*32+:32];
     wire [32:0] c$n_3;
-    wire signed [31:0] result_14;
+    wire signed [31:0] result_22;
     wire signed [31:0] c$case_alt_5;
     wire [31:0] \r'_2 ;
     wire [32:0] \c$r'_app_arg_1 ;
     wire signed [32:0] r_1;
     wire  fired;
     wire signed [31:0] c$app_arg;
-    wire signed [31:0] result_15;
+    wire signed [31:0] result_23;
     wire signed [31:0] c$case_alt_6;
     wire [16:0] c$app_arg_0;
     wire [15:0] c$app_arg_1;
@@ -362,9 +380,9 @@ module snn16to8to4
 
     assign c$bv_5 = (\r'_2 );
 
-    assign result_14 = ((( \c$r'_app_arg_1 [33-1] ) ^ ( c$bv_5[32-1] )) == 1'b0) ? ($signed(\r'_2 )) : c$case_alt_5;
+    assign result_22 = ((( \c$r'_app_arg_1 [33-1] ) ^ ( c$bv_5[32-1] )) == 1'b0) ? ($signed(\r'_2 )) : c$case_alt_5;
 
-    assign c$bv_6 = (($unsigned(result_15)));
+    assign c$bv_6 = (($unsigned(result_23)));
 
     assign c$bv_7 = (($unsigned(zipWith_in2_3)));
 
@@ -376,15 +394,15 @@ module snn16to8to4
 
     assign \c$r'_app_arg_1  = ($unsigned(r_1));
 
-    assign r_1 = result_15 + zipWith_in2_3;
+    assign r_1 = result_23 + zipWith_in2_3;
 
-    assign fired = result_14 >= 32'sd65536;
+    assign fired = result_22 >= 32'sd65536;
 
-    assign c$app_arg = fired ? 32'sd0 : result_14;
+    assign c$app_arg = fired ? 32'sd0 : result_22;
 
     assign c$bv_8 = (rR >> (64'sd16));
 
-    assign result_15 = (((~ (| (c$app_arg_0))) | (& (c$app_arg_0))) == 1'b1) ? ($signed((c$bv_8[0+:32]))) : c$case_alt_6;
+    assign result_23 = (((~ (| (c$app_arg_0))) | (& (c$app_arg_0))) == 1'b1) ? ($signed((c$bv_8[0+:32]))) : c$case_alt_6;
 
     assign c$case_alt_6 = (( c$app_arg_1[16-1] ) == 1'b0) ? 32'sd2147483647 : -32'sd2147483648;
 
@@ -413,20 +431,20 @@ module snn16to8to4
   // zipWith start
   genvar i_10;
   generate
-  for (i_10 = 0; i_10 < 4; i_10 = i_10 + 1) begin : zipWith_4
+  for (i_10 = 0; i_10 < 16; i_10 = i_10 + 1) begin : zipWith_4
     wire signed [31:0] zipWith_in1_4;
-    assign zipWith_in1_4 = sg[i_10*32+:32];
+    assign zipWith_in1_4 = sf[i_10*32+:32];
     wire signed [31:0] zipWith_in2_4;
-    assign zipWith_in2_4 = c$results_app_arg_0[i_10*32+:32];
+    assign zipWith_in2_4 = c$results_app_arg[i_10*32+:32];
     wire [32:0] c$n_4;
-    wire signed [31:0] result_16;
+    wire signed [31:0] result_24;
     wire signed [31:0] c$case_alt_8;
     wire [31:0] \r'_3 ;
     wire [32:0] \c$r'_app_arg_2 ;
     wire signed [32:0] r_2;
     wire  fired_0;
     wire signed [31:0] c$app_arg_5;
-    wire signed [31:0] result_17;
+    wire signed [31:0] result_25;
     wire signed [31:0] c$case_alt_9;
     wire [16:0] c$app_arg_6;
     wire [15:0] c$app_arg_7;
@@ -445,9 +463,9 @@ module snn16to8to4
 
     assign c$bv_10 = (\r'_3 );
 
-    assign result_16 = ((( \c$r'_app_arg_2 [33-1] ) ^ ( c$bv_10[32-1] )) == 1'b0) ? ($signed(\r'_3 )) : c$case_alt_8;
+    assign result_24 = ((( \c$r'_app_arg_2 [33-1] ) ^ ( c$bv_10[32-1] )) == 1'b0) ? ($signed(\r'_3 )) : c$case_alt_8;
 
-    assign c$bv_11 = (($unsigned(result_17)));
+    assign c$bv_11 = (($unsigned(result_25)));
 
     assign c$bv_12 = (($unsigned(zipWith_in2_4)));
 
@@ -459,15 +477,15 @@ module snn16to8to4
 
     assign \c$r'_app_arg_2  = ($unsigned(r_2));
 
-    assign r_2 = result_17 + zipWith_in2_4;
+    assign r_2 = result_25 + zipWith_in2_4;
 
-    assign fired_0 = result_16 >= 32'sd65536;
+    assign fired_0 = result_24 >= 32'sd65536;
 
-    assign c$app_arg_5 = fired_0 ? 32'sd0 : result_16;
+    assign c$app_arg_5 = fired_0 ? 32'sd0 : result_24;
 
     assign c$bv_13 = (rR_1 >> (64'sd16));
 
-    assign result_17 = (((~ (| (c$app_arg_6))) | (& (c$app_arg_6))) == 1'b1) ? ($signed((c$bv_13[0+:32]))) : c$case_alt_9;
+    assign result_25 = (((~ (| (c$app_arg_6))) | (& (c$app_arg_6))) == 1'b1) ? ($signed((c$bv_13[0+:32]))) : c$case_alt_9;
 
     assign c$case_alt_9 = (( c$app_arg_7[16-1] ) == 1'b0) ? 32'sd2147483647 : -32'sd2147483648;
 
@@ -496,15 +514,23 @@ module snn16to8to4
   assign result_projection = {{c$ds1_app_arg,
                                c$ds2_app_arg},   c$ds2_app_arg_0};
 
-  assign result = result_projection[3:0];
+  assign result = result_projection[7:0];
 
-  assign result_0 = result[3:3];
+  assign result_0 = result[7:7];
 
-  assign result_1 = result[2:2];
+  assign result_1 = result[6:6];
 
-  assign result_2 = result[1:1];
+  assign result_2 = result[5:5];
 
-  assign result_3 = result[0:0];
+  assign result_3 = result[4:4];
+
+  assign result_4 = result[3:3];
+
+  assign result_5 = result[2:2];
+
+  assign result_6 = result[1:1];
+
+  assign result_7 = result[0:0];
 
 
 endmodule

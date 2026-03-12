@@ -181,7 +181,7 @@ let
             impls = String.(data[:, 2])
             luts = Float64.(data[:, 6])
 
-            cfg_order = ["4to3", "4to3to2", "8to4", "16to8to4"]
+            cfg_order = ["4to3", "4to3to2", "8to4", "16to8to4", "32to16to8"]
             lut_cat = [luts[(configs .== cfg) .& (impls .== "categorical")][1] for cfg in cfg_order]
             lut_flat = [luts[(configs .== cfg) .& (impls .== "flat")][1] for cfg in cfg_order]
 

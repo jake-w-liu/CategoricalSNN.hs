@@ -76,6 +76,25 @@ experiment5_scalability = do
   putStrLn "--- Experiment 5: Scalability Sweep ---"
 
   let params = defaultLIFParams
+      summarizeRates rates =
+        let rateMin = P.minimum rates
+            rateMax = P.maximum rates
+            rateMean = P.sum rates P./ P.fromIntegral (length rates)
+        in  (rateMin, rateMax, rateMean)
+      formatSummaryRow config layers inWidth outWidth exactMatch rates =
+        let (rateMin, rateMax, rateMean) = summarizeRates rates
+        in  L.intercalate ","
+              [ config
+              , intToStr layers
+              , intToStr inWidth
+              , intToStr outWidth
+              , P.show exactMatch
+              , dblToStr rateMin
+              , dblToStr rateMax
+              , dblToStr rateMean
+              ]
+      repeatedRates =
+        [0.3, 0.2, 0.4, 0.1, 0.35, 0.25, 0.15, 0.3 :: P.Double]
 
   -- Baseline scale: 4 -> 3
   let w_4_3 :: C.Vec 3 (C.Vec 4 Weight)
@@ -180,28 +199,53 @@ experiment5_scalability = do
       fltOut_16 = simulate fltNet_16_8_4 inputs16
       match_16 = P.all P.id (zipWith (P.==) catOut_16 fltOut_16)
 
+  -- Scale 3: 32 -> 16 -> 8 (structured two-layer pyramid)
+  let w_32_16 :: C.Vec 16 (C.Vec 32 Weight)
+      w_32_16 = C.repeat (C.repeat 0.0625)
+
+      channelTrains32 =
+        [ bernoulliSpikeTrain numTimesteps rate seed'
+        | (rate, seed') <- zip (P.take 32 (P.cycle repeatedRates)) [70 .. 101]
+        ]
+
+      inputs32 :: [C.Vec 32 Spike]
+      inputs32 =
+        [ C.map
+            (\i -> (channelTrains32 P.!! P.fromIntegral i) P.!! t)
+            (C.indicesI :: C.Vec 32 (C.Index 32))
+        | t <- [0 .. numTimesteps P.- 1]
+        ]
+
+      catNet_32_16_8 = snnNetwork2Layer w_32_16 w_16_8 params
+      fltNet_32_16_8 = flatNetwork2Layer w_32_16 w_16_8 params
+      catOut_32 = simulate catNet_32_16_8 inputs32
+      fltOut_32 = simulate fltNet_32_16_8 inputs32
+      match_32 = P.all P.id (zipWith (P.==) catOut_32 fltOut_32)
+
   -- Compute firing rates for each scale
   let rates_8_4 = map (\i -> firingRate (map (\v -> v C.!! i) catOut_8_4))
                       [0, 1, 2, 3 :: C.Index 4]
       rates_16 = map (\i -> firingRate (map (\v -> v C.!! i) catOut_16))
                      [0, 1, 2, 3 :: C.Index 4]
+      rates_32 = map (\i -> firingRate (map (\v -> v C.!! i) catOut_32))
+                     [0, 1, 2, 3, 4, 5, 6, 7 :: C.Index 8]
 
-  let formatRates width rates =
-        L.intercalate "," (map dblToStr rates ++ replicate (width P.- length rates) "NaN")
-
-  let header = "config,layers,input_width,output_width,exact_match,out0_rate,out1_rate,out2_rate,out3_rate"
-      rows = [ "4to3,1,4,3," ++ P.show match_4_3 ++ "," ++ formatRates 4 rates_4_3
-             , "4to3to2,2,4,2," ++ P.show match_4_3_2 ++ "," ++ formatRates 4 rates_4_3_2
-             , "8to4,1,8,4," ++ P.show match_8_4 ++ "," ++ formatRates 4 rates_8_4
-             , "16to8to4,2,16,4," ++ P.show match_16 ++ "," ++ formatRates 4 rates_16
+  let header = "config,layers,input_width,output_width,exact_match,rate_min,rate_max,rate_mean"
+      rows = [ formatSummaryRow "4to3" 1 4 3 match_4_3 rates_4_3
+             , formatSummaryRow "4to3to2" 2 4 2 match_4_3_2 rates_4_3_2
+             , formatSummaryRow "8to4" 1 8 4 match_8_4 rates_8_4
+             , formatSummaryRow "16to8to4" 2 16 4 match_16 rates_16
+             , formatSummaryRow "32to16to8" 2 32 8 match_32 rates_32
              ]
 
   writeFile (baseDir ++ "experiment5_scalability.csv") (header ++ "\n" ++ unlines rows)
 
   putStrLn ("  8->4 single layer match: " ++ P.show match_8_4)
   putStrLn ("  16->8->4 two-layer match: " ++ P.show match_16)
+  putStrLn ("  32->16->8 two-layer match: " ++ P.show match_32)
   putStrLn ("  Firing rates 8->4: " ++ P.show rates_8_4)
   putStrLn ("  Firing rates 16->8->4: " ++ P.show rates_16)
+  putStrLn ("  Firing rates 32->16->8: " ++ P.show rates_32)
   putStrLn ""
 
 -- ============================================================

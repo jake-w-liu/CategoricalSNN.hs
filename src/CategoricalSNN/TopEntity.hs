@@ -10,6 +10,7 @@ module CategoricalSNN.TopEntity
   , weights3to2
   , weights8to4
   , weights16to8
+  , weights32to16
   , snn4to3
   , snn4to3Flat
   , snn4to3to2
@@ -18,6 +19,8 @@ module CategoricalSNN.TopEntity
   , snn8to4Flat
   , snn16to8to4
   , snn16to8to4Flat
+  , snn32to16to8
+  , snn32to16to8Flat
   ) where
 
 import Clash.Annotations.TopEntity (PortName(..), TopEntity(..))
@@ -57,6 +60,10 @@ weights8to4 =
 -- | Weight matrix for the first layer in the 16 -> 8 -> 4 benchmark.
 weights16to8 :: Vec 8 (Vec 16 Weight)
 weights16to8 = repeat (repeat 0.125)
+
+-- | Weight matrix for the first layer in the 32 -> 16 -> 8 benchmark.
+weights32to16 :: Vec 16 (Vec 32 Weight)
+weights32to16 = repeat (repeat 0.0625)
 
 -- | Bridge an existential 'SNNMorphism' to Clash's synthesizable 'mealy'.
 toCircuit
@@ -237,3 +244,47 @@ snn16to8to4Flat
 snn16to8to4Flat =
   exposeClockResetEnable
     (toCircuit (flatNetwork2Layer weights16to8 weights8to4 benchmarkLIFParams))
+
+{-# ANN snn32to16to8
+  (Synthesize
+    { t_name = "snn_32to16to8"
+    , t_inputs =
+        [ PortName "clk"
+        , PortName "rst"
+        , PortName "en"
+        , PortName "spike_in"
+        ]
+    , t_output = PortName "spike_out"
+    }) #-}
+{-# NOINLINE snn32to16to8 #-}
+snn32to16to8
+  :: Clock System
+  -> Reset System
+  -> Enable System
+  -> Signal System (Vec 32 Spike)
+  -> Signal System (Vec 8 Spike)
+snn32to16to8 =
+  exposeClockResetEnable
+    (toCircuit (snnNetwork2Layer weights32to16 weights16to8 benchmarkLIFParams))
+
+{-# ANN snn32to16to8Flat
+  (Synthesize
+    { t_name = "snn_32to16to8_flat"
+    , t_inputs =
+        [ PortName "clk"
+        , PortName "rst"
+        , PortName "en"
+        , PortName "spike_in"
+        ]
+    , t_output = PortName "spike_out"
+    }) #-}
+{-# NOINLINE snn32to16to8Flat #-}
+snn32to16to8Flat
+  :: Clock System
+  -> Reset System
+  -> Enable System
+  -> Signal System (Vec 32 Spike)
+  -> Signal System (Vec 8 Spike)
+snn32to16to8Flat =
+  exposeClockResetEnable
+    (toCircuit (flatNetwork2Layer weights32to16 weights16to8 benchmarkLIFParams))
